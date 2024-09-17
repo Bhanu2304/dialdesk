@@ -1,0 +1,19 @@
+
+
+<table border="1">
+<tr>
+	<td>MSISDN</td>
+        <td>CallDate</td>
+        <td>CloseLoopCate1</td>
+        <td>CloseLoopCate2</td>
+        <td>CloseLoopingDate</td>
+		<td>Category1</td>
+		<td>Category2</td>
+		<td>Name</td>
+		<td>Remark</td>
+		<td>City</td>
+		<td>Alt Mobile</td>
+	  
+</tr>
+
+</table>

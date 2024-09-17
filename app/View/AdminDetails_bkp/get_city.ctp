@@ -1,0 +1,1 @@
+ <?php echo $this->Form->input('city',array('label'=>false,'options'=>$city,'empty'=>'Select City')); ?>

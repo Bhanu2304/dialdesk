@@ -1,0 +1,32 @@
+
+
+
+<table  border="1">
+					<tr align="center">
+                    	<td>Ticket No.</td>
+						<td>Branch Name</td>
+                        <td>Process Name</td>
+                        <td>Process Desc</td>
+                        <td>Process Type</td>
+                        <td>Requirement Desc</td>
+                        <td>Requirement Type</td>
+						<td>Ticket Desc</td>
+                    	<td>Date</td>
+                        <td>Status</td>  
+					</tr>
+                    						<tr align="center">
+                           <td>19</td>
+							<td>AHEMDABAD HOUSE</td>
+                            <td>p2p</td>
+                            <td>Sale</td>
+                            <td>voice</td>
+                            <td>Please add plan name field</td>
+                             <td>                                New                                                                </td>
+                           
+                        	<td>welcome back</td>
+							<td>2016-01-16 15:38:01</td>
+                            <td>
+								                                                                                                Close                                
+                           	</td>
+                        </tr>
+									</table>

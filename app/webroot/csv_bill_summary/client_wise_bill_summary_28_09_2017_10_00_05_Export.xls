@@ -1,0 +1,101 @@
+<table border="1">
+        <tr>
+        <th>CLIENT NAME</th>
+        <th>PLAN NAME</th>
+        <th>PLAN TYPE</th>
+        <th>PLAN RENT</th>
+        <th>FREE VALUE</th>
+        <th>VALIDITY START DATE</th>
+        <th>VALIDITY END DATE</th>
+        <th>CURRENT ACCOUNT BALANCE</th>
+        <th>ACCOUNT STATUS</th>
+    </tr><tr><td>ARB Accessories pvt Ltd</td><td>ARB</td><td>Prepaid</td><td>125500</td><td>90000</td><td>2017-07-01</td><td style="background-color:#008000">2018-01-01</td><td style="background-color:#008000">71822.75</td><td>Active</td>
+            </tr><tr><td>BALTRA Home Products</td><td>Baltra</td><td>Prepaid</td><td>37750</td><td>22500</td><td>2017-07-13</td><td style="background-color:#ff6666">2017-10-13</td><td style="background-color:#ff0000">-11968.7</td><td>Active</td>
+            </tr><tr><td>Blaupunkt</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>BridgeLoyalty Customer Experience Management LLP</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Civic Elevators</td><td>Civic Elevators</td><td>Postpaid</td><td>0</td><td>0</td><td>2016-11-01</td><td style="background-color:#FFA500">2017-11-01</td><td style="background-color:">1631.3</td><td>Active</td>
+            </tr><tr><td>Demo</td><td>Summer King </td><td>Prepaid</td><td>37750</td><td>22500</td><td>2017-09-27</td><td style="background-color:#FFA500">2017-12-27</td><td style="background-color:#008000">22500</td><td>Active</td>
+            </tr><tr><td>Destin Electrotech Pvt Ltd</td><td>Destin Electrotech Pvt Ltd</td><td>Prepaid</td><td>27750</td><td>17500</td><td></td><td style="background-color:"></td><td></td><td>Active</td>
+            </tr><tr><td>DIALDESK</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>DLF Estate Developers Limited</td><td>DLF</td><td>Prepaid</td><td>87500</td><td>87500</td><td>2017-09-01</td><td style="background-color:#FFA500">2017-12-01</td><td style="background-color:#008000">78335.7</td><td>Active</td>
+            </tr><tr><td>Door Serve Pvt Ltd</td><td>Door Serve</td><td>Prepaid</td><td>37750</td><td>20000</td><td>2017-08-11</td><td style="background-color:#FFA500">2017-11-11</td><td style="background-color:#008000">18695.1</td><td>Active</td>
+            </tr><tr><td>DURIAN INDUSTRIES LTD</td><td>Durian </td><td>Prepaid</td><td>24102</td><td>15000</td><td>2017-06-01</td><td style="background-color:#FFA500">2017-12-01</td><td style="background-color:#008000">8177.67</td><td>Active</td>
+            </tr><tr><td>HIMGIRI ENTERPRISES PVT LTD</td><td>Silver Plan Updated</td><td>Postpaid</td><td>0</td><td>0</td><td>2016-11-01</td><td style="background-color:#FFA500">2017-11-01</td><td style="background-color:">14332.45</td><td>Active</td>
+            </tr><tr><td>I2e1 New</td><td>I2e1 Testing</td><td>Prepaid</td><td>50000</td><td>40000</td><td>2017-08-01</td><td style="background-color:#ff0000">2017-09-01</td><td style="background-color:#008000">7010.5</td><td>Active</td>
+            </tr><tr><td>IP Bank</td><td>IP Bank </td><td>Prepaid</td><td>55500</td><td>44500</td><td>2017-04-05</td><td style="background-color:#ff0000">2017-10-05</td><td style="background-color:#008000">43699.68</td><td>Active</td>
+            </tr><tr><td>Kan Universal Pvt. Ltd.</td><td>Kan Universal </td><td>Prepaid</td><td>37750</td><td>22500</td><td>2017-08-26</td><td style="background-color:#FFA500">2017-11-26</td><td style="background-color:#008000">22345.25</td><td>Active</td>
+            </tr><tr><td>Keeline Applinace Pvt Ltd</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Krish Realtynirman Pvt. Ltd.</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Mas Callnet</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>one97 communication ltd</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Oxford University Press</td><td>Oxford Shared</td><td>Prepaid</td><td>61002</td><td>39000</td><td>2017-06-01</td><td style="background-color:#FFA500">2017-12-01</td><td style="background-color:#008000">37341.64</td><td>Active</td>
+            </tr><tr><td>PikQuick</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Ready Roti India Pvt Limited (Harvest Gold)</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Recpdcl</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Rx Infotech P Limited</td><td>RX Infotech Pvt Ltd</td><td>Prepaid</td><td>26250</td><td>22250</td><td>2017-08-05</td><td style="background-color:#FFA500">2017-11-05</td><td style="background-color:#ff0000">-2780.7</td><td>Active</td>
+            </tr><tr><td>Spheros Motherson</td><td>Silver T550</td><td>Postpaid</td><td>0</td><td>0</td><td>2016-11-01</td><td style="background-color:#FFA500">2017-11-01</td><td style="background-color:">-35194.65</td><td>Active</td>
+            </tr><tr><td>Summerking India</td><td>Summer King </td><td>Prepaid</td><td>37750</td><td>22500</td><td></td><td style="background-color:"></td><td></td><td>Active</td>
+            </tr><tr><td>TECHNOKING DISTRIBUTERS</td><td>Technoking </td><td>Prepaid</td><td>31992</td><td>22500</td><td>2017-08-05</td><td style="background-color:#FFA500">2017-11-05</td><td style="background-color:#008000">21671.3</td><td>Active</td>
+            </tr><tr><td>Timwe</td><td>Timwe</td><td>Prepaid</td><td>45000</td><td>18000</td><td>2017-09-01</td><td style="background-color:#FFA500">2017-12-01</td><td style="background-color:#008000">17437.85</td><td>Active</td>
+            </tr><tr><td>Usha Shriram Enterprises Pvt. Ltd.</td><td>Usha Shri Ram - Prepaid</td><td>Prepaid</td><td>37750</td><td>22500</td><td>2017-04-04</td><td style="background-color:#ff0000">2017-07-03</td><td style="background-color:#ff0000">-194879.25</td><td>Active</td>
+            </tr></table>

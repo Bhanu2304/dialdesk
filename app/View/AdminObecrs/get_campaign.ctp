@@ -1,0 +1,1 @@
+ <?php echo $this->Form->input('campaign',array('label'=>false,'options'=>$campaign,'empty'=>'Select Campaign Name')); ?>

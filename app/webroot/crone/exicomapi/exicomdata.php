@@ -1,0 +1,20 @@
+<?php
+$db = mysql_connect("localhost","root","dial@mas123","false",128);
+mysql_select_db("db_dialdesk",$db)or die("cannot select DB");
+
+$ClientId       =   326;
+$call_master    =   mysql_query("SELECT Id FROM call_master WHERE ClientId='$ClientId' AND DATE(CallDate)=CURDATE() AND OtherStatus IS NULL");
+
+while($row=mysql_fetch_array($call_master)){
+    
+    $Id          =   $row['Id'];
+    
+    mysql_query("INSERT INTO `exicom_tagging_master`(`Id`,`ClientId`,`SrNo`,`MSISDN`,`Category1`,`Category2`,`Category3`,`Category4`,`Category5`,`Field1`,`Field2`,`Field3`,`Field4`,`Field5`,`Field6`,`Field7`,`Field8`,`Field9`,`Field10`,`Field11`,`Field12`,`Field13`,`Field14`,`Field15`,`Field16`,`Field17`,`Field18`,`Field19`,`Field20`,`Field21`,`Field22`,`Field23`,`Field24`,`Field25`,`Field26`,`Field27`,`Field28`,`Field29`,`Field30`,`Field31`,`Field32`,`Field33`,`Field34`,`Field35`,`Field36`,`Field37`,`Field38`,`Field39`,`Field40`,`Field41`,`Field42`,`Field43`,`Field44`,`Field45`,`Field46`,`Field47`,`Field48`,`Field49`,`Field50`,`CallDate`,`AgentId`,`LeadId`,`close_loop`,`CloseLoopCate1`,`CloseLoopCate2`,`CloseLoopingDate`,`FollowupDate`,`closelooping_remarks`,`CloseLoopStatus`,`UpdateDate`,`emailSend`,`smsSend`,`escalation_no`,`escalation_status`,`CallType`,`TagType`,`Escalation`,`Escalation_date`,`Escalation1`,`Escalation1_date`,`Escalation2`,`Escalation2_date`,`Escalation3`,`Escalation3_date`,`tat`,`duedate`,`callcreated`,`MailStatus`,`MailDateTime`,`CField1`,`CField2`,`CField3`,`CField4`,`CField5`,`CField6`,`CField7`,`CField8`,`CField9`,`CField10`,`CField11`,`CField12`,`CField13`,`CField14`,`CField15`,`CField16`,`CField17`,`CField18`,`CField19`,`CField20`,`CField21`,`CField22`,`CField23`,`CField24`,`CField25`,`CField26`,`CField27`,`CField28`,`CField29`,`CField30`,`CFieldUpdate`,`AbandLeadId`,`AbandStatus`,`AbandDate`,`Urandom`,`AWBNo`,`CCRCRDREF`,`DestinationArea`,`DestinationLocation`,`TokenNumber`,`AreaCode`,`AreaPincode`,`AreaPlace`,`AreaAddress`,`AreaServiceCenterCode`,`Ret_AWBNo`,`Ret_CCRCRDREF`,`Ret_DestinationArea`,`Ret_DestinationLocation`,`Ret_TokenNumber`,`Ret_PikupDate`,`OtherStatus`,`OtherId`,`OtherDate`,`OtherDiscription`) 
+    SELECT `Id`,`ClientId`,`SrNo`,`MSISDN`,`Category1`,`Category2`,`Category3`,`Category4`,`Category5`,`Field1`,`Field2`,`Field3`,`Field4`,`Field5`,`Field6`,`Field7`,`Field8`,`Field9`,`Field10`,`Field11`,`Field12`,`Field13`,`Field14`,`Field15`,`Field16`,`Field17`,`Field18`,`Field19`,`Field20`,`Field21`,`Field22`,`Field23`,`Field24`,`Field25`,`Field26`,`Field27`,`Field28`,`Field29`,`Field30`,`Field31`,`Field32`,`Field33`,`Field34`,`Field35`,`Field36`,`Field37`,`Field38`,`Field39`,`Field40`,`Field41`,`Field42`,`Field43`,`Field44`,`Field45`,`Field46`,`Field47`,`Field48`,`Field49`,`Field50`,`CallDate`,`AgentId`,`LeadId`,`close_loop`,`CloseLoopCate1`,`CloseLoopCate2`,`CloseLoopingDate`,`FollowupDate`,`closelooping_remarks`,`CloseLoopStatus`,`UpdateDate`,`emailSend`,`smsSend`,`escalation_no`,`escalation_status`,`CallType`,`TagType`,`Escalation`,`Escalation_date`,`Escalation1`,`Escalation1_date`,`Escalation2`,`Escalation2_date`,`Escalation3`,`Escalation3_date`,`tat`,`duedate`,`callcreated`,`MailStatus`,`MailDateTime`,`CField1`,`CField2`,`CField3`,`CField4`,`CField5`,`CField6`,`CField7`,`CField8`,`CField9`,`CField10`,`CField11`,`CField12`,`CField13`,`CField14`,`CField15`,`CField16`,`CField17`,`CField18`,`CField19`,`CField20`,`CField21`,`CField22`,`CField23`,`CField24`,`CField25`,`CField26`,`CField27`,`CField28`,`CField29`,`CField30`,`CFieldUpdate`,`AbandLeadId`,`AbandStatus`,`AbandDate`,`Urandom`,`AWBNo`,`CCRCRDREF`,`DestinationArea`,`DestinationLocation`,`TokenNumber`,`AreaCode`,`AreaPincode`,`AreaPlace`,`AreaAddress`,`AreaServiceCenterCode`,`Ret_AWBNo`,`Ret_CCRCRDREF`,`Ret_DestinationArea`,`Ret_DestinationLocation`,`Ret_TokenNumber`,`Ret_PikupDate`,`OtherStatus`,`OtherId`,`OtherDate`,`OtherDiscription` FROM `call_master` 
+    WHERE Id='$Id'"); 
+    
+    mysql_query("UPDATE `call_master` SET OtherStatus='1',OtherDate=NOW(),OtherDiscription='SUCCESS' WHERE ClientId='$ClientId' AND Id='$Id'");   
+}
+?>
+
+

@@ -1,0 +1,176 @@
+<table border="1">
+        <tr>
+        <th>CLIENT NAME</th>
+        <th>PLAN NAME</th>
+        <th>PLAN TYPE</th>
+        <th>PLAN RENT</th>
+        <th>FREE VALUE</th>
+        <th>VALIDITY START DATE</th>
+        <th>VALIDITY END DATE</th>
+        <th>CURRENT ACCOUNT BALANCE</th>
+        <th>ACCOUNT STATUS</th>
+    </tr><tr><td>AGRAWAL PHARMA</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Akai India</td><td>Hometech Digital Pvt. Ltd. (Akai)</td><td>Prepaid</td><td>1200000</td><td>1200000</td><td>2021-04-01</td><td style="background-color:#ff0000">2022-03-31</td><td style="background-color:#008000">399952.75</td><td>Active</td>
+            </tr><tr><td>Altum technology</td><td>Altum Technologies</td><td>Prepaid</td><td>120000</td><td>92000</td><td>2022-10-19</td><td style="background-color:#008000">2023-10-18</td><td style="background-color:#008000">101938</td><td>Active</td>
+            </tr><tr><td>ARYAA TECHNOVENTURE PRIVATE LIMITED</td><td>ARYAA TECHNOVENTURE PRIVATE LIMITED</td><td>Prepaid</td><td>120000</td><td>96000</td><td></td><td style="background-color:"></td><td></td><td>Active</td>
+            </tr><tr><td>Ayurved Pratishthan Nasik Pvt Ltd</td><td>Sandook </td><td>Prepaid</td><td>120000</td><td>96000</td><td>2022-10-04</td><td style="background-color:#008000">2023-10-03</td><td style="background-color:#008000">95929.6</td><td>Active</td>
+            </tr><tr><td>BAJAJ ELECTRICALS LIMITED</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Bella Vita</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Blue Heaven Cosmetics Private Limited</td><td>Blueheaven</td><td>Prepaid</td><td>151000</td><td>100000</td><td>2021-04-01</td><td style="background-color:#ff0000">2022-03-31</td><td style="background-color:#008000">98663.95</td><td>Active</td>
+            </tr><tr><td>Bmunk Hospitality Pvt Ltd</td><td>Bmunk Villa</td><td>Prepaid</td><td>100000</td><td>80000</td><td>2022-11-03</td><td style="background-color:#008000">2023-11-02</td><td style="background-color:#008000">79750.8</td><td>Active</td>
+            </tr><tr><td>Brave essential</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Demo Account</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Dialdesksales&marketing</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>DLF Estate Developers Limited</td><td>DLF ESTATE DEVELOPERS LIMITED</td><td>Prepaid</td><td>350000</td><td>350000</td><td>2021-04-01</td><td style="background-color:#ff0000">2022-03-31</td><td style="background-color:#008000">332172.4</td><td>Active</td>
+            </tr><tr><td>DU DIGITAL TECHNOLOGIES  LIMITED</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Exicom Tele-Systems Limited</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>FireFly Networks Ltd</td><td>Firefly</td><td>Prepaid</td><td>60000</td><td>43028</td><td>2021-04-01</td><td style="background-color:#ff0000">2022-03-31</td><td style="background-color:#008000">43002.5</td><td>Active</td>
+            </tr><tr><td>Fortum Charge & Drive India Private Limited</td><td>Fortum India</td><td>Prepaid</td><td>151000</td><td>140000</td><td>2022-04-01</td><td style="background-color:#FFA500">2023-03-31</td><td style="background-color:#008000">139328</td><td>Active</td>
+            </tr><tr><td>G Kumar Electro Pvt Ltd</td><td>G Kumar Electro Pvt Ltd</td><td>Prepaid</td><td>120000</td><td>84000</td><td>2022-10-11</td><td style="background-color:#008000">2023-10-10</td><td style="background-color:#008000">120000</td><td>Active</td>
+            </tr><tr><td>Glossaread Technologies Pvt. Ltd</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Glossaread Technologies Pvt. Ltd.</td><td>SkillCamper</td><td>Prepaid</td><td>180000</td><td>140000</td><td></td><td style="background-color:"></td><td></td><td>Active</td>
+            </tr><tr><td>Grynow Media Pvt. Ltd.</td><td>Grynow Media Pvt. Ltd</td><td>Prepaid</td><td>38400</td><td>38400</td><td></td><td style="background-color:"></td><td></td><td>Active</td>
+            </tr><tr><td>Gujrat Housing</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>HIMGIRI ENTERPRISES PVT LTD</td><td>HIMGIRI ENTERPRISES PVT LTD</td><td>Prepaid</td><td>60000</td><td>60000</td><td>2021-04-01</td><td style="background-color:#ff0000">2022-03-31</td><td style="background-color:#008000">3318.4</td><td>Active</td>
+            </tr><tr><td>International Academy of Sound Healing</td><td>SoundVeda IASH</td><td>Prepaid</td><td>60000</td><td>52000</td><td>2022-08-26</td><td style="background-color:#008000">2023-08-25</td><td style="background-color:#008000">95970.4</td><td>Active</td>
+            </tr><tr><td>Jazz Inn Rooms</td><td>Jazz in plan</td><td>Prepaid</td><td>60000</td><td>40000</td><td>2022-04-03</td><td style="background-color:#FFA500">2023-04-02</td><td style="background-color:#008000">80574</td><td>Active</td>
+            </tr><tr><td>JEANNYPR SOFTECH PRIVATE LIMITED</td><td>JEANNYPR SOFTECH PRIVATE LIMITED</td><td>Prepaid</td><td>120000</td><td>92000</td><td>2022-12-26</td><td style="background-color:#008000">2023-12-25</td><td style="background-color:#008000">92000</td><td>Active</td>
+            </tr><tr><td>KARMA KUNDLI</td><td>KARMA KUNDLI</td><td>Prepaid</td><td>0</td><td>0</td><td></td><td style="background-color:"></td><td></td><td>Active</td>
+            </tr><tr><td>KSR DATA VIZON PRIVATE LIMITED</td><td>KSR DATAVIZON</td><td>Prepaid</td><td>36000</td><td>36000</td><td></td><td style="background-color:"></td><td></td><td>Active</td>
+            </tr><tr><td>Language and Learning Foundation</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>LeadsArk</td><td>LEADSARK</td><td>Prepaid</td><td>200000</td><td>164000</td><td>2022-08-13</td><td style="background-color:#008000">2023-08-12</td><td style="background-color:#008000">131478</td><td>Active</td>
+            </tr><tr><td>LoanJunction</td><td>loan junction</td><td>Prepaid</td><td>151000</td><td>120000</td><td>2022-02-01</td><td style="background-color:#ff0000">2023-01-31</td><td style="background-color:#008000">64934</td><td>Active</td>
+            </tr><tr><td>M/S KW HOMES PRIVATE LIMITED</td><td>KW HOMES</td><td>Prepaid</td><td>180000</td><td>160000</td><td>2022-07-11</td><td style="background-color:#008000">2023-07-10</td><td style="background-color:#008000">123795.8</td><td>Active</td>
+            </tr><tr><td>MAANYA MOTORCYCLES PRIVATE LIMITED</td><td>Maanya motorcycles pvt ltd</td><td>Prepaid</td><td>80000</td><td>48000</td><td>2022-12-15</td><td style="background-color:#008000">2023-12-14</td><td style="background-color:#008000">48000</td><td>Active</td>
+            </tr><tr><td>Magic Pin</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Magic Pin-2</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>MeesoGood</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>MInSysT Consulting Private Limited</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>Nature Essence</td><td>Nature Essence</td><td>Prepaid</td><td>151000</td><td>100000</td><td>2021-04-01</td><td style="background-color:#ff0000">2022-03-31</td><td style="background-color:#008000">97831</td><td>Active</td>
+            </tr><tr><td>Omega seiki pvt ltd</td><td>OMEGA SEIKI PVT LTD </td><td>Prepaid</td><td>140000</td><td>100000</td><td>2022-12-01</td><td style="background-color:#008000">2023-11-30</td><td style="background-color:#008000">100000</td><td>Active</td>
+            </tr><tr><td>PARAMOUNT PROPBUILD PRIVATE LIMITED</td><td>Paramount Propbuild Private Limited</td><td>Prepaid</td><td>120000</td><td>92000</td><td>2023-01-13</td><td style="background-color:#008000">2024-01-12</td><td style="background-color:#008000">92000</td><td>Active</td>
+            </tr><tr><td>Ready Roti India Pvt Limited (Harvest Gold)</td><td>Ready Roti India Pvt. Ltd.</td><td>Prepaid</td><td>251000</td><td>120000</td><td>2021-04-01</td><td style="background-color:#ff0000">2022-03-31</td><td style="background-color:#008000">196663.05</td><td>Active</td>
+            </tr><tr><td>Revosal Inc</td><td>Revosal Inc</td><td>Prepaid</td><td>80000</td><td>64000</td><td>2022-10-06</td><td style="background-color:#008000">2023-10-05</td><td style="background-color:#008000">63325</td><td>Active</td>
+            </tr><tr><td>Ronerbiz</td><td>Ronerbiz</td><td>Prepaid</td><td>80000</td><td>60000</td><td>2022-10-10</td><td style="background-color:#008000">2023-10-09</td><td style="background-color:#008000">52552.8</td><td>Active</td>
+            </tr><tr><td>Rx Infotech P Limited</td><td>Rx Infotech P Limited</td><td>Prepaid</td><td>105000</td><td>89000</td><td>2021-04-01</td><td style="background-color:#ff0000">2022-03-31</td><td style="background-color:#008000">74477.9</td><td>Active</td>
+            </tr><tr><td>SASTHI ENTERPRISES PVT LTD</td><td>SASTHI ENTERPRISES PRIVATE LIMITED</td><td>Prepaid</td><td>120000</td><td>102000</td><td>2022-09-15</td><td style="background-color:#008000">2023-09-14</td><td style="background-color:#008000">52302</td><td>Active</td>
+            </tr><tr><td>Saumil Gosai & Associates</td><td>Saumil Gosai & Associates</td><td>Prepaid</td><td>120000</td><td>100000</td><td>2022-12-14</td><td style="background-color:#008000">2023-12-13</td><td style="background-color:#008000">100000</td><td>Active</td>
+            </tr><tr><td>Shri Sai Entertainments Private Limited</td><td>Shri Sai Entertainments Private Limited</td><td>Prepaid</td><td>75000</td><td>60000</td><td>2022-12-29</td><td style="background-color:#008000">2023-12-28</td><td style="background-color:#008000">59995</td><td>Active</td>
+            </tr><tr><td>SRF LIMITED</td><td>SRF LTD</td><td>Prepaid</td><td>120000</td><td>92000</td><td>2022-10-20</td><td style="background-color:#008000">2023-10-19</td><td style="background-color:#008000">32998.4</td><td>Active</td>
+            </tr><tr><td>SUJAN INDUSTRIES</td><td>Sujan Industries</td><td>Prepaid</td><td>240000</td><td>200000</td><td>2022-06-16</td><td style="background-color:#008000">2023-06-15</td><td style="background-color:#008000">62326</td><td>Active</td>
+            </tr><tr><td>The Cotton Villa</td><td>The Cotton Villa</td><td>Prepaid</td><td>40000</td><td>28000</td><td>2022-07-16</td><td style="background-color:#008000">2023-07-15</td><td style="background-color:#008000">83982.6</td><td>Active</td>
+            </tr><tr><td>THOMSON PRESS INDIA LTD</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>TRAVELPORT HOLIDAYS (INDIA) PRIVATE LIMITED</td><td>TRAVELPORT</td><td>Prepaid</td><td>80000</td><td>56000</td><td>2022-10-11</td><td style="background-color:#008000">2023-10-10</td><td style="background-color:#008000">165797.6</td><td>Active</td>
+            </tr><tr><td>TUCHWARE TECHNOLOGIES PRIVATE LIMITED</td><td>Tuchware</td><td>Prepaid</td><td>80000</td><td>60000</td><td>2022-11-15</td><td style="background-color:#008000">2023-11-14</td><td style="background-color:#008000">59922.8</td><td>Active</td>
+            </tr><tr><td>TV Tele Shopping</td><td>Tescon Multi Product Pvt Ltd</td><td>Prepaid</td><td>111000</td><td>95000</td><td>2021-04-01</td><td style="background-color:#ff0000">2022-03-31</td><td style="background-color:#008000">93332.75</td><td>Active</td>
+            </tr><tr><td>TWENTY4 JEWELLERY INDUSTRIES PRIVATE LIMITED</td><td>TWENTY4 JEWELLERY INDUSTRIES PRIVATE LIMITED</td><td>Prepaid</td><td>120000</td><td>92000</td><td></td><td style="background-color:"></td><td></td><td>Active</td>
+            </tr><tr><td>Upper Crust Foods Pvt Ltd.</td><td>SBARRO PIZZA</td><td>Prepaid</td><td>60000</td><td>60000</td><td>2021-10-01</td><td style="background-color:#ff0000">2022-09-30</td><td style="background-color:#008000">15000</td><td>Active</td>
+            </tr><tr><td>VAALVE BATHWARE INDIA LIMITED</td><td>VAALVE BATHWARE INDIA LIMITED </td><td>Prepaid</td><td>60000</td><td>48000</td><td>2023-01-05</td><td style="background-color:#008000">2024-01-04</td><td style="background-color:#008000">48000</td><td>Active</td>
+            </tr><tr><td>Valeo Motherson</td><td>Valeo Motherson</td><td>Prepaid</td><td>72600</td><td>72600</td><td>2021-04-01</td><td style="background-color:#ff0000">2022-03-31</td><td style="background-color:#008000">64910.4</td><td>Active</td>
+            </tr><tr><td>Vedika Wearable LLP</td><td>Vedika Wearable LLP</td><td>Prepaid</td><td>180000</td><td>140000</td><td>2022-12-20</td><td style="background-color:#008000">2023-12-19</td><td style="background-color:#008000">140000</td><td>Active</td>
+            </tr><tr><td>Viega</td><td>No Plan Allocated</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td>
+                <td>NA</td><td>Active</td>
+            </tr><tr><td>WhiteTree Devices Private Limited</td><td>The White Tree Devices_New</td><td>Prepaid</td><td>120000</td><td>92000</td><td>2022-12-01</td><td style="background-color:#008000">2023-11-30</td><td style="background-color:#008000">91997.6</td><td>Active</td>
+            </tr><tr><td>Wiom</td><td>Omnia</td><td>Prepaid</td><td>151000</td><td>90000</td><td>2021-04-01</td><td style="background-color:#ff0000">2022-03-31</td><td style="background-color:#008000">-90312.85</td><td>Active</td>
+            </tr></table>

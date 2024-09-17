@@ -1,0 +1,47 @@
+********** Okhla **********
+
+Team Viewer id=  689436653  
+
+password = 8784
+
+192.168.0.252
+
+
+********** Ahamdabad **********
+
+Ip = 80.80.80.200
+
+Team Viewer id= 771129180
+
+password =  8509 5630
+
+-------------------------------
+
+Static IP = 182.19.10.3
+
+mjpqy123
+
+navneet.chander@teammas.in
+parveen.kumar@teammas.in
+rajendra.singh@teammas.in
+
+
+SMTP = smtp.planetghost.com
+
+sendmail_from = info@planetghost.com
+
+
+chandresh.tripathi@teammas.in
+
+
+503 = mehra_ss2005@yahoo.com
+
+553 = teammas.in
+
+123.63.194.74
+
+
+
+http://www.thedesignwork.com/36-best-menu-designs-template/
+
+

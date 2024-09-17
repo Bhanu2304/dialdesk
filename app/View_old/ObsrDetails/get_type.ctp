@@ -1,0 +1,1 @@
+ <?php echo $this->Form->input('Category1',array('label'=>false,'options'=>$type,'empty'=>'Select Scenarios')); ?>

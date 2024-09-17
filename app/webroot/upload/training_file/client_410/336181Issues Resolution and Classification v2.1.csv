@@ -1,0 +1,129 @@
+FF,"Frequently asked questions 
+(Sub-Type)",Type,Q/R/C,Technical / Non Tech,Issue Type (FTR/NFTR),Probing,"Opco 
+(Airtel/Vodafone)",Possible Resolution,Problem resolution step 2,If not resolved,,Resolution TAT
+,,,,,,,,,,"Collect required data ( Mobile Number, MAC ID, Location, Device Make and Model)",,Resolution TAT
+1,How to find out if Wi-Fi is present,Awareness Related,Query,Non Technical,FTR,"- Ask his location and city and 
+- Check from database if it is in our list",Airtel/Vodafone,"Confirm the user if : 
+- WiFi is present. 
+- Check if user has switch on his wifi in mobile device and 
+- Check if the SSID name from the list. If any of  SSID present user can start using Wi-Fi.      ",,FTR,,4 hrs
+2,How to login,Process Related,Query,Non Technical,FTR,"- Which location and City and 
+- Which type of wifi he needs to login
+-  Free/Paid/Airtel user / Vodafone user",Airtel/Vodafone,Depending on location and opco explain the login procedure,,FTR,,4 hrs
+3,SSID not connecting,SSID Related,Complaint,Technical,FTR,"Confirm the user if : 
+- WiFi is present. 
+- Check if user has switch on his wifi in mobile device and 
+- Check if the SSID name from the list. If any of  SSID present user can start using Wi-Fi.      ",Airtel/Vodafone,"Click on SSID and select forget SSID, then try connecting",Restart the phone,"Mobile Number, Wi-fi MAC ID, Location, Device's  Make and Model,",Raise ticket and forward to technical team,4 hrs
+4,SSID Not Appearing,SSID Related,Complaint,Technical,FTR,Check if site is up ,Airtel/Vodafone,"If Yes, communicate to that the Wi-Fi is deployed only in common areas",If not then communicate user that we are checking from backend and some one may contact you,"Collect Mobile Number,  Location, City,",Raise ticket and forward to technical team,4 hrs
+5,"Too many SSIDs, which SSID to connect",SSID Related,Query,Non Technical,FTR,"- Check the customer location
+- Ask the SSIDs radiating at location",,Kindly explain purpose of each SSID,,FTR,,4 hrs
+6,Landing page not appearing,Captive Portal Related,Complaint,Technical,FTR,"- Check the customer location
+- Check if the customer has connected to Free SSID as per the list
+- Have you got the popup promting to open landing page?",Airtel/Vodafone,"1.Reconnect to the Free WiFi
+2. All some time for the landing page to open automatically (Depends on handset model)
+3. Click on a Pop Up Prompt, if received, to connect to the WiFi","1. If any landing page is open from previous attempt, kindly close them
+2. Open any Browser
+3. Open any Http site (non https) like rediff.com
+4. Else type Type http://detectportal.firefox.com/success.txt ","Else collect Mobile Number, Wi-fi MAC ID, Location, Device's  Make and Model,",Raise ticket and forward to technical team,4 hrs
+7,Landing page appearing  slow,Captive Portal Related,Complaint,Technical,NFTR,Have you got the popup promting to open landing page?,Airtel/Vodafone,1. Kindly swtch off mobile data and check,,"Else collect Mobile Number, Wi-fi MAC ID, Location, Device's  Make and Model,",Raise ticket and forward to technical team,48 hrs
+8,Which tab to use for which purpose,Captive Portal Related,Query,Non Technical,FTR,"- Check the location Name
+- Check from list if Airtel or Vodafone location
+- Check which SSID is he connected
+-O Which different SSIDs are visible",Airtel/Vodafone,"Airtel Location
+- Click on 'Free Wi-Fi' tab for Free usage
+- Click on 'Paid Wi-Fi'- For purchasing wi-Fi packs on line (@Rs10/GB)
+- Click on 'Airtel Users' - For using quota from mobility plan
+- Click on'Voucher WiFi'-  For Using Wi-Fi through Vouchers
+Vodafone Locations:
+- Connect to 'VFWiFiVoucher' SSID
+- Select 'Complimentary WiFi' from the drop down menu for free usage
+- Select the other plan for paid WiFi (@Rs 10/GB)",,FTR,,4 hrs
+9,Not getting free/complementary option in landing page,Captive Portal Related,Query,Non Technical,FTR,Check in CRM if Free/complimentory usage enabled with self registration,Airtel/Vodafone,If Not: Inform the user that free uase with self registration is  not available for location.,,"Collect Mobile Number,  Location, City,",Raise ticket and forward to Non-technical team,4 hrs
+,,,,,,If free usage enabled through  Vouchers,,"Inform the user to that he needs to collect voucher from LP and go to Voucher tab, enter voucher code and mobile number to get OTP and authenticate by entering OTP received and will be connected to internet",,,,
+,,,,,,If free usage is not enabled,,"Inform the user that there is no free usage enabled, user need to purchase plan or if Airtel/Voda subscriber they can use associated Wi-Fi pack with mobility plan",,,,
+,,,,,,If free usage is enabled,,"Inform user you are raising TT, some one will contact him",,,Raise a TT,
+10,Not getting paid option in landing page,Captive Portal Related,Query,Non Technical,FTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location",Airtel/Vodafone,- Ask the customer to connect to right SSID,"Else, inform the user that TT is being raised, some one may contact him","Collect Mobile Number,  Location, City,",Raise ticket and forward to Non-technical team,4 hrs
+11,Not getting Airtel user connectivity option in landing page,Captive Portal Related,Query,Non Technical,FTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location",Airtel ,"The Airtel user Tab is available only at following SSID :
+- @Free Airtel WiFi
+- @Airtel WiFi","Else, inform the user that TT is being raised, some one may contact him","Collect Mobile Number,  Location, City,",Raise ticket and forward to Non-technical team,4 hrs
+12,Not getting Voucher connectivity option in landing page,Captive Portal Related,Query,Non Technical,FTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location",Airtel ,"The Airtel user Tab is available only at certain locations with following SSID :
+- @Free Airtel WiFi","Else, inform the user that TT is being raised, some one may contact him","Collect Mobile Number,  Location, City,",Raise ticket and forward to Non-technical team,4 hrs
+13,No OTP,OTP Reated,Complaint,Non Technical,FTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location
+- Check if the customer is using a Valid Indian Mobile number",Airtel/Vodafone,"If yes and it is Indian number, explain him that may be due to congestion in mobile network or unavailibility of mobile Network SMS may not be delivered",,,,4 hrs
+,,,,,,"- If using a Foreign number
+- Connected to right SSID
+- And calling from any of the Airports",,If yes and user has foreign number explain him that may be due to any of mobile network congestion  or unavailibility of mobile network ,"Else, inform the user that TT is being raised, some one may contact him","Collect Mobile Number,  Location, City,",,
+,,,,,,"- If using a Foreign number
+- Connected to right SSID
+- And NOT calling from any of the Airports",,Communicate that SMS service is available only for Indian numbers ,,,,
+14,Delay in OTP,OTP Reated,Complaint,Non Technical,FTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location
+- Check if the customer is using a Valid Indian Mobile number",Airtel/Vodafone,May be due to mobile network congestion or no mobile signal coverage area,,,,4 hrs
+15,What is my free Data Quota,Awareness Related,Query,Non Technical,FTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location
+- Check the quota allocated to the location",Airtel/Vodafone,"- Communicate the Quota as per the database, 
+- Also inform that the customer can also see the same post login",,FTR,,4 hrs
+16,What is time limit for free access,Awareness Related,Query,Non Technical,FTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location
+- Check the quota allocated to the location",Airtel/Vodafone,"- Communicate the Quota as per the database, 
+- Also inform that the customer can also see the same post login",,FTR,,4 hrs
+17,Not getting the asigned data quota details at success page,Captive Portal Related,Complaint,Non Technical,FTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location
+- Check the quota allocated to the location",Airtel/Vodafone,- Inform the same to user that the quota might have been exhausted,"Else, inform the user that TT is being raised, some one may contact him","Collect Mobile Number,  Location, City,",,4 hrs
+18,"After entering OTP, could not get connected",Captive Portal Related,Complaint,Non Technical,FTR,Capture Error Message user is getting,Airtel/Vodafone,Ask user to click on URL received in OTP SMS to connect. ,If not resolved,"Collect Mobile Number, Wi-fi MAC ID, Location, Device's  Make and Model, Find out the error message",Raise TT,4 hrs
+19,"After entering Mobile number and submitting , it says user already registered",Captive Portal Related,Query,Non Technical,FTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location
+- Check the quota allocated to the location",Airtel Location,"- If user had registered earlier on the same day and plan is still not expired ask him to login with existing credential
+- Click on existing user link to enter the details",,,,4 hrs
+20,"After entering login credential not getting connected, its showing quota exhausted.",Captive Portal Related,Query,Non Technical,FTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location
+- Check the quota allocated to the location",Airtel/Vodafone,Inform that he has consumed free quota. He can either purchase Wi-Fi plan or if he is Airtel/Voda subscriber he can use wifi pack associated with Mobility pack,,,,4 hrs
+21,Speed is very slow,User Experience,Complaint,Technical,NFTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location
+- Check the quota allocated to the location",Airtel/Vodafone,kindly communicate the user that we are raising the issue with technical team,,"Collect Mobile Number, Wi-fi MAC ID, Location, Device's  Make and Model, Find out the error message",Raise TT to technical team,48 hrs
+22,My Wifi is getting logged out,User experience,Query,Non Technical,FTR,If user is moving in and out of coverage area,Airtel Location,"If yes, communicate the user that after first login till 30 minutes if user walks in and out he will be connected automatically, if it is beyond 30 minutes: 
+- He has to login again through 'Existing Customer' Link on landing page, or
+- Click on URL received with OTP.","If No, apologise for inconvinience caused and inform him that issue is getting forwarded to technical team",,Raise the ticket and forward to technical team,4 hrs
+,,,,,,,,"If not, provide with one voucher",,,,
+23,Have loggedin with Voucher but landing page is again appearing,User experience,Complaint,Non Technical,FTR,Check if user has moved out of coverage area,Airtel/Vodafone,Inform him that he can login using existing credential by clicking on existing user on voucher tab. Inform him to check in autologin box so that user will not disconnect for 30 mins.,,,,4 hrs
+24,Showing connected to WiFi but unable to browse:,Process Related,Complaint,Non Technical,FTR,"- Check the customer location
+- Check if he has connected to right Free SSID as per location
+- Check the quota allocated to the location",Airtel/Vodafone,"?	Need to check whether user got ?Sign In? POP up after connecting to free WiFi SSID or not.
+?	If yes, user needs to follow login steps to be connected and browse successfully.
+?	If not, user needs to open browser (preferably google chrome) and type any http site to get redirected to landing page to enter login credentials.","If issue still not resolved, raise ticket to technical team.",,Raise the ticket and forward to technical team,4 hrs
+25,Why do I need to register my details?,,Query,Non Technical,FTR,,Airtel/Vodafone,"As per DoT regulation, All user has to be authenticated to avoid any misuse of Free WiFi services That is why we are using OTP based authentication mechanism to authenticate users.",,,,4 hrs
+26,How can I receive free Wifi otp if I am in zero mobile coverage?,,Query,Non Technical,FTR,,Airtel/Vodafone,"To receive OTP, It is required to have some mobility coverage. But once authenticated user can browse internet even he goes to zero mobility coverage.",,,,4 hrs
+27,Free WiFi service can also be used on a laptop ?,,Query,Non Technical,FTR,,Airtel/Vodafone,"Yes, Our Free WiFi services can be used/accessed on Laptop,Ipad or any WiFi enabled desktops as well.",,,,4 hrs
+28,Can I get the OTP even though DND is activated ?,,Query,Non Technical,FTR,,Airtel/Vodafone,"Registering in DND helps you, that you don't receive promotional SMS regarding offers, discount coupons etc from unknown senders. However you can receive Transactional SMS to your mobile number even if its a DND. SMS such as order confirmations, notifications, One Time Password (OTP), delivery updates, wishes etc.",,,,4 hrs
+29,How do I know that how much data I have used ?,,Query,Non Technical,FTR,,Airtel/Vodafone,Currently there is no mechanism to track usage data on phone or laptop,,,,4 hrs
+30,Can I use my second sim to connect free WiFi after using 1st sim ?,,Query,Non Technical,FTR,,Airtel/Vodafone,"Yes, User can do this. They will get to use same free WiFi quota again.",,,,4 hrs
+31,"When I try to see the SMS inbox for OTP, the login page disappears",,Complaint,Non Technical,FTR,,Airtel/Vodafone,"- 	In such scenario, ask user to click on link/URL received in OTP message to get redirected to landing page to enter their login credentials.
+- Request user to note or copy message from pop up message on screen itself to avoid such issue in future.
+'- Or, Open the landing page again by disconnecting and reconnecting the WiFi. Use the 'Existing User' link to enter the details again",,,,4 hrs
+32,where do i find this kind of wifi services in my city/near by area ?,,Query,Non Technical,FTR,,Airtel/Vodafone,"- We are present at most of the prominent public places across Delhi, Mumbai, Pune, Bangalore
+- Check in all site data base and search customer's city/area and find WiFi hotspot list ",,,,4 hrs
+33,"I have the SIM card other than Vodafone and Airtel, Can I use the free WiFi services ?",,Query,Non Technical,FTR,,Airtel/Vodafone,"- To use Free WiFi services basic requirement is to have a phone and valid indian mobile number. 
+- Can be used by any mobile connection holder irrespective of Operator.",,,,4 hrs
+34,Showing connected to WiFi but unable to browse:,,Complaint,Technical,FTR,- Check if the user has completed the OTP based  Authentication process,Airtel/Vodafone,"?	Need to check whether user got ?Sign In? POP up after connecting to free WiFi SSID or not.
+?	If yes, user needs to follow login steps to be connected and browse successfully.
+?	If not, user needs to open browser (preferably google chrome) and type any http site to get redirected to landing page to enter login credentials.","If issue still not resolved, raise ticket to technical team.",,Raise the ticket and forward to technical team,4 hrs
+35,I am not able to login with on Airtel user ?,MDO,Complaint,Technical,FTR,If user is an Airtel subscriber? ,Airtel,"If not a Airtel subscriber, communicate that the facility is only for Airtel subscriber",,,,
+,,,,,,"If yes, has he received the SMS with OTP after entering his number in designated field?",Airtel,"If yes, ask him to enter the OTP in designated field",,,,
+,,,,,,"If even after entering OTP he is not able to connect, ask him the message he is getting?",Airtel,"Inform him that :
+- For Prepaid, the WiFi quota is available on recharge of 199 and above
+- For Postpaid, the WiFi quota is as per your data pack
+- Hence, The quota might have been exhausted in the mobile pack
+- You may confirm the WiFi quota from Airtel Customer care ",,,,
+36,I am not able to login with on VodafoneWiFi landing page? (on '@MyVodafone WiFi' SSID),MDO,,,FTR,If user is a Vodafone subscriber? ,Vodafone,"If not a Vodafone subscriber, communicate that the facility is only for Vodafone subscriber",,,,
+,,,,,,"If yes, has he received the SMS with OTP after entering his number in designated field?",Vodafone,"If yes, ask him to enter the OTP in designated field",,,,
+,,,,,,"If even after entering OTP he is not able to connect, ask him the message he is getting?",Vodafone,"Inform him that :
+- The quota might have been exhausted in the mobile pack
+- You may confirm the WiFi quota from Airtel Customer care ",,,,
+37,Am not able to connect to My Airtel WiFi SSID,MDO,,,,If user is an Airtel subscriber and has downloaded 'Airtel Thanks' app from playstore and still not being not able to connect,Airtel,"Inform him :
+- WiFi access through 'Airtel Thanks' app is currently available for only Prepaid Android customers
+- Postpaid and iPhone users can connect through the 'Airtel User' Tab by connecting to '@Free Airtel WiFi' SSID",,,,
+,,,,,,,,,,,,

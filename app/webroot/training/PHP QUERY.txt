@@ -1,0 +1,191 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------
+//HTML INPUT// 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+<?php echo $this->Form->create('CloseLoopings',array('action'=>'save_close_loop','onsubmit'=>'return validCloseLooping()')); ?>
+<?php echo $this->form->label('Close Looping Sub Category');?>
+<?php echo $this->Form->input('close_loop_category', array('label'=>false,'id'=>'close_loop_category')); ?>
+<?php echo $this->Form->input('sub_type', array('label'=>false,'options'=>$subcat,'value'=>$get_close_loop['CloseLoopMaster']['sub_type'],'id'=>'sub_type')); ?>
+<?php echo this->Form->button('Redirect1', array('type'=>'button'));?>
+<?php $this->Form->end();?>
+<?php echo $this->Html->link('Edit',array('controller'=>'CloseLoopings','action'=>'edit_close_loop','?'=>array('id'=>$row['id']),'full_base' => true)); ?>
+<?php echo $this->Html->link('Delete',array('controller'=>'CloseLoopings','action'=>'delete_close_loop','?'=>array('id'=>$row['id']),'full_base' => true),array('onclick'=>"return confirm('Are you sure you want to delete this item?')"));?>
+
+<?php echo $this->Html->css('dropdown-menu');?>
+<?php echo $this->Html->script('jquery-1.11.3.min');?>
+<a href="<?php echo $this->webroot?>ClientActivations/logout">Logout</a>
+
+<select name="close_loop" id="close_loop">
+	<option value="">Select Close Looping</option>
+	<option <?php if($get_close_loop['CloseLoopMaster']['close_loop']=="system") echo 'selected="selected"'; ?> value="system">System</option>
+        <option <?php if($get_close_loop['CloseLoopMaster']['close_loop']=="manual") echo 'selected="selected"'; ?> value="manual">Manual</option>
+</select> 
+<font style="color:red;"><?php echo $this->Session->flash(); ?></font>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+//JOIN// 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+$getClient = $this->RegistrationMaster->find('all');
+	$roles = $this->IvrMaster->find('all',
+		array(
+			'fields'=>array('id,pid,cid,name,registration_master.company_id','registration_master.auth_person','registration_master.company_name'),
+			'joins' => array(
+				array(
+					'table' => 'registration_master',
+					'type'=>'Left',
+					'alias'=>'registration_master',
+					'conditions'=>array("IvrMaster.cid=registration_master.company_id"),
+					'group' => array('IvrMaster.cid'),
+				)
+			)
+			
+		));
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+//QUERY// 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+$this->CloseLoopMaster->find('list',array('fields'=>array("id","name"),'conditions'=>array('Client'=>$ClientId)));
+$this->CloseLoopMaster->find('all',array('conditions' =>array('client_id' => $this->Session->read('companyid'))));
+$this->CloseLoopMaster->find('all',array('fields' => array( 'id','name', 'email', 'password'),'order' => array('id'=>'desc')));
+$this->CloseLoopMaster->query("select Plan from clientplan_master where id=$type");
+$this->CloseLoopMaster->save($data);
+$this->CloseLoopMaster->updateAll($data,array('id'=>$id,'client_id' => $this->Session->read('companyid')));
+$this->CloseLoopMaster->delete(array('id'=>$id,'client_id' => $this->Session->read('companyid')));
+$this->redirect(array('action' => 'view_close_loop'));
+$this->request->is('Post');
+$this->Session->setFlash("Already Exists at Given Process Name");
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+//INPUT QUERY// 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+$this->request->data['Ecr']['Category'];
+$this->params['data']['company_name']);
+$this->params['data']['id'];
+$this->request->query['id'];
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+//SESSION QUERY// 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+$this->Session->write("companyid",$arrData['RegistrationMaster']['company_id']);
+$this->Session->read('companyid');
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+//SAVE FUNCTION// 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+public function save_close_loop(){
+		if($this->request->is('Post')){
+			$clientid=$this->Session->read('companyid');
+			$data=array(
+				'client_id'=>$clientid,
+				'type'=>$this->params['data']['CloseLoopings']['type'],
+				'sub_type'=>$this->params['data']['CloseLoopings']['sub_type'],
+				'close_loop'=>$this->params['data']['close_loop'],
+				'close_loop_category'=>$this->params['data']['CloseLoopings']['close_loop_category'],
+				'close_loop_sub_category'=>$this->params['data']['CloseLoopings']['close_loop_sub_category']
+				);
+			$this->CloseLoopMaster->save($data);
+			$this->redirect(array('action' => 'view_close_loop'));
+		}
+	}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+//VIEW FUNCTION// 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+public function view_close_loop(){
+		$this->layout='user';
+		$arrData=array();
+		$result = $this->CloseLoopMaster->find('all',array('conditions' =>array('client_id' => $this->Session->read('companyid'))));
+		foreach($result as $row){
+			$type=$row['CloseLoopMaster']['type'];
+			$subtype=$row['CloseLoopMaster']['sub_type'];
+			$typename=$this->ClientCategory->query("select Plan from clientplan_master where id=$type");
+			$subtypename=$this->ClientCategory->query("select Plan from clientplan_master where id=$subtype");
+			
+			$arrData[]=array(
+				'id'=>$row['CloseLoopMaster']['id'],
+				'type'=>$typename[0]['clientplan_master']['Plan'],
+				'sub_type'=>$subtypename[0]['clientplan_master']['Plan'],
+				'close_loop'=>$row['CloseLoopMaster']['close_loop'],
+				'close_loop_category'=>$row['CloseLoopMaster']['close_loop_category'],
+				'close_loop_sub_category'=>$row['CloseLoopMaster']['close_loop_sub_category']
+			);
+		}
+		$this->set('data',$arrData);
+	}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+//EDIT FUNCTION// 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+	public function edit_close_loop(){
+		$this->layout='user';
+		$ClientId = $this->Session->read('companyid');
+		$Category =$this->ClientCategory->find('list',array('fields'=>array("id","Plan"),'conditions'=>array('parent_id'=>NULL,'Client'=>$ClientId)));
+		$result = $this->CloseLoopMaster->find('first',array('conditions' =>array('id' => $this->request->query['id'],'client_id' => $this->Session->read('companyid'))));
+		$subcat=$this->ClientCategory->find('list',array('fields'=>array("id","Plan"),'conditions'=>array('parent_id'=>$result['CloseLoopMaster']['type'],'Client'=>$ClientId)));
+		$this->set('subcat',$subcat);
+		$this->set('category',$Category);
+		$this->set('get_close_loop',$result);
+	}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+//UPDATE FUNCTION// 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+	public function update_close_loop(){
+		if ($this->request->is('post')) {
+			$id=$this->params['data']['id'];
+
+			$data=array(
+				'type'=>"'".$this->params['data']['CloseLoopings']['type']."'",
+				'sub_type'=>"'".$this->params['data']['CloseLoopings']['sub_type']."'",
+				'close_loop'=>"'".$this->params['data']['close_loop']."'",
+				'close_loop_category'=>"'".$this->params['data']['CloseLoopings']['close_loop_category']."'",
+				'close_loop_sub_category'=>"'".$this->params['data']['CloseLoopings']['close_loop_sub_category']."'"
+				);	
+				
+			$this->CloseLoopMaster->updateAll($data,array('id'=>$id,'client_id' => $this->Session->read('companyid')));
+			$this->redirect(array('action' => 'view_close_loop'));
+		}
+	}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+//DELETE FUNCTION// 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+	
+	public function delete_close_loop(){
+		$id  = $this->request->query['id'];
+		$this->CloseLoopMaster->delete(array('id'=>$id,'client_id' => $this->Session->read('companyid')));
+		$this->redirect(array('action' => 'view_close_loop'));
+	}
+
+
+
+
+
+
+	
+			$parentname=$this->CloseLoopMaster->query("select close_loop_category from closeloop_master where id=$parid");
+			
+			if($parid==0){
+				$parent_category=$row['CloseLoopMaster']['close_loop_category'];
+			}
+			else{
+				$parent_category=$parentname[0]['closeloop_master']['close_loop_category'];
+			}

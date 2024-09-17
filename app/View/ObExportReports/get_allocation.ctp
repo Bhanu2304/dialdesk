@@ -1,0 +1,1 @@
+ <?php echo $this->Form->input('AllocationName',array('label'=>false,'options'=>$allocations,'empty'=>'Select Allocation')); ?>

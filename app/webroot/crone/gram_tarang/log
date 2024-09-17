@@ -1,0 +1,33 @@
+success-> {"status":true,"total":3}
+mysql error-> Unknown column 'data_i' in 'field list'
+save_data mysql error-> Unknown column 'data_i' in 'field list'
+save_data success-> {"status":true,"total":4}
+save_data success-> {"status":true,"total":4}
+save_data success-> {"status":true,"total":18}
+save_data success-> {"status":true,"total":4}
+save_data success-> {"status":true,"total":10}
+save_data success-> {"status":true,"total":8}
+save_data success-> {"status":true,"total":1}
+save_data success-> {"status":true,"total":1}
+save_data success-> {"status":true,"total":3}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"RAM","Email":"ram@gmail.com","MobileNumber":"8764321397","LeadSource":"94","leadChannel":"22","Course":"1","Center":"","Location":"1"}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"","Email":"","MobileNumber":"9112818192","LeadSource":"","leadChannel":"","Course":"","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"Monika","Email":"Monika@gmail.com","MobileNumber":"9654511222","LeadSource":"95","leadChannel":"22","Course":"2","Center":"","Location":"1"}
+save_data success-> {"status":true,"total":2}
+save_data success-> {"status":true,"total":12}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"Vijay Kumar","Email":"Abc@gmail.com","MobileNumber":"9990888659","LeadSource":"22","leadChannel":"94","Course":"1","Center":"","Location":"Test tagging"}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"test name ","Email":"test@gmail.com","MobileNumber":"9999999999","LeadSource":"2","leadChannel":"2","Course":"","Center":"","Location":"2"}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"","Email":"","MobileNumber":"8757473392","LeadSource":"","leadChannel":"","Course":"","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"ganesh ","Email":"","MobileNumber":"8309382182","LeadSource":"all sets ","leadChannel":"","Course":"ganesh ","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"","Email":"","MobileNumber":"9065547200","LeadSource":"","leadChannel":"","Course":"","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"","Email":"","MobileNumber":"9900653542","LeadSource":"","leadChannel":"","Course":"","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"","Email":"","MobileNumber":"8892248107","LeadSource":"","leadChannel":"","Course":"","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"","Email":"","MobileNumber":"9036629331","LeadSource":"","leadChannel":"","Course":"","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"","Email":"","MobileNumber":"9703232970","LeadSource":"","leadChannel":"","Course":"","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"saitra","Email":"","MobileNumber":"8747015685","LeadSource":"all sets","leadChannel":"","Course":"saitra","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"","Email":"","MobileNumber":"8007009848","LeadSource":"","leadChannel":"","Course":"","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"","Email":"","MobileNumber":"7319090127","LeadSource":"","leadChannel":"","Course":"","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"","Email":"","MobileNumber":"7066319028","LeadSource":"","leadChannel":"","Course":"","Center":"","Location":""}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"","Email":"","MobileNumber":"9350234810","LeadSource":"","leadChannel":"","Course":"","Center":"","Location":""}
+save_data success-> {"status":true,"total":1}
+json data ->{"AuthToken":"IMPACT-16-04-2024","Source":"impact","FirstName":"test name","Email":"test@gmail.com","MobileNumber":"8218024554","LeadSource":"127","leadChannel":"22","Course":"6","Center":"7","Location":"6"}

@@ -1,0 +1,1 @@
+<?php echo $this->Form->input('FieldMaster.Campaign',array('label'=>false,'options'=>$campaignName,'empty'=>'Select Campaign', 'onChange'=>'getAllocation()','class'=>'form-control')); ?>

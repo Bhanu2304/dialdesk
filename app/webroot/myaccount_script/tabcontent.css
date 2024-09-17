@@ -1,0 +1,77 @@
+/* my account and setting css property */
+.delete-img{
+    cursor:pointer; 
+    float: right;
+}
+
+.doc-msg{
+    margin-left: 20px;
+    padding-bottom: 10px;
+    color: red;
+}
+
+.border-red{
+    border: 1px solid red;
+}
+
+.imgset{
+	width:250px;
+	height:100px;
+	cursor:pointer;
+}
+
+.otpdiv{
+	width:35%;
+        height:auto;
+	position: fixed;
+	left: 40%;
+	top: 30%;
+	padding:0 50px 20px;
+        background-clip: padding-box;
+        background-color: #fff;
+        border-radius: 2px;
+        box-shadow: 0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22);
+	z-index:2000;
+	display:none;
+}
+.otpcancle{
+	font-size:25px;
+	cursor:pointer;
+	margin-left:107%;
+}
+
+#coverdiv{
+	position:fixed; 
+	top:0; left:0; 
+	background:rgba(0,0,0,0.6); 
+	z-index:5; width:100%; 
+	height:100%; 
+	display:none;
+}
+
+.otpdiv .otp-mess{
+    float: left;
+    left: 185px;
+    top: -40px;
+    position: relative;
+}
+
+.edit_logo{
+    width:30px;
+    cursor:pointer;
+    margin-left: 25px;
+}
+
+.cancel_logo{
+    width:30px;
+    cursor:pointer;
+    margin-left: 25px;
+}
+
+#mge-error{
+    margin-left: 105px;
+}
+
+
+
+

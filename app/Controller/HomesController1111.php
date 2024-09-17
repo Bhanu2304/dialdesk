@@ -1,0 +1,1273 @@
+<?php
+class HomesController extends AppController{
+	public $helpers = array('Html', 'Form','Js');
+	public $components = array('RequestHandler');
+	public $uses=array('ClientCategory','UploadExistingBase','RegistrationMaster','vicidialCloserLog',
+            'vicidialUserLog','CallMaster','CallRecord','CampaignName','CallMasterOut','ClientReportMaster',
+            'AbandCallMaster','vicidialLog','PlanMaster','InitialInvoice');
+	
+	
+	public function beforeFilter(){
+		parent::beforeFilter();
+		$this->Auth->allow();
+                $this->InitialInvoice->useDbConfig = 'dbNorth';
+                $this->vicidialCloserLog->useDbConfig = 'db2';
+                /*
+		if(!$this->Session->check("companyid")){
+			return $this->redirect(array('controller'=>'ClientActivations','action' => 'index'));
+		}*/
+    }
+    //$this->Session->check("companyid")
+    //$this->Session->write("role","admin");
+    
+	public function index() {
+            $this->layout='user';
+               
+            //$Campaign =$this->CampaignName->find('list',array('fields'=>array("id","CampaignName"),'conditions'=>array('ClientId'=>$this->Session->read('companyid'))));
+            //$this->set('Campaign',$Campaign);
+            
+            //print_r($leftMenu); exit;
+            
+            
+            if($this->Session->read('role') =="admin"){
+                $client =$this->RegistrationMaster->find('list',array('fields'=>array("company_id","Company_name"),'conditions'=>array('status'=>'A'),'order'=>array('Company_name'=>'asc')));
+                $this->set('client',$client);
+               
+                if($this->request->is('Post')){
+                    $data=$this->request->data['Homes'];
+                    if(!empty($data)){
+                        $status =$this->RegistrationMaster->find('first',array('fields'=>array("status","campaignid",'create_date'),'conditions'=>array('company_id'=>$data['clientID'])));
+                        $this->Session->write("companyid",$data['clientID']);
+                        $this->Session->write("clientstatus",$status['RegistrationMaster']['status']);
+                        $this->Session->write("campaignid",$status['RegistrationMaster']['campaignid']);
+                        $this->set("activation_date",date('d-M-y',strtotime($status['RegistrationMaster']['create_date'])));
+                      
+                    }
+                    /*
+                    else{
+                        $this->Session->delete('companyid');
+                        $this->Session->delete('clientstatus');
+                        $this->Session->delete('campaignid');  
+                    }*/
+                }
+            }
+            
+              
+                
+		$ClientId = $this->Session->read('companyid');
+		$start = date('Y-m-d');
+                
+                $callType=$this->request->data['callType'];
+                //$campaignid=$this->request->data['campaignid'];
+                $fd=$this->request->data['fdate'];
+                $ld=$this->request->data['ldate'];
+		if (isset($this->request->data['view_type'])){
+			$view_type=$this->request->data['view_type'];
+			if($view_type=="Today"){
+				$conditions = "and date(CallDate) = curdate()";
+                                $Abandconditions = "and date(AbandDate) = curdate()";
+                                $conditions1 = "and date(cm.CallDate) = curdate()";
+				$view_date="date(t2.call_date) = curdate()";
+                                $condArr['date(CallDate)']=date('Y-m-d');
+			}
+			if($view_type=="Yesterday"){
+				$yesterday=date('Y-m-d', strtotime('-1 day'));
+                                $condArr['date(CallDate)']=$yesterday;
+				$conditions = "and date(CallDate) = SUBDATE(CURDATE(),INTERVAL 1 DAY)";
+                                $Abandconditions = "and date(AbandDate) = SUBDATE(CURDATE(),INTERVAL 1 DAY)";
+                                $conditions1 = "and date(cm.CallDate) = SUBDATE(CURDATE(),INTERVAL 1 DAY)";
+				$view_date="date(t2.call_date) = SUBDATE(CURDATE(),INTERVAL 1 DAY)";
+			}
+			if($view_type=="Weekly"){
+        		$end = date('Y-m-d', strtotime('-6 day'));
+                                $condArr['date(CallDate) <=']=date('Y-m-d');
+                                $condArr['date(CallDate) >=']=$end;
+				$conditions = "and date(CallDate) between SUBDATE(CURDATE(),INTERVAL 6 DAY) and CURDATE()";
+                                $Abandconditions = "and date(AbandDate) between SUBDATE(CURDATE(),INTERVAL 6 DAY) and CURDATE()";
+                                $conditions1 = "and date(cm.CallDate) between SUBDATE(CURDATE(),INTERVAL 6 DAY) and CURDATE()";
+				$view_date="date(t2.call_date) between SUBDATE(CURDATE(),INTERVAL 6 DAY) and CURDATE()";
+			}
+			if($view_type=="Monthly"){
+				$end = date('Y-m-d', strtotime('-30 day'));
+                                $condArr['date(CallDate) <=']=date('Y-m-d');
+                                $condArr['date(CallDate) >=']=$end;
+                                
+				//$conditions = "and date(CallDate) between SUBDATE(CURDATE(),INTERVAL 30 DAY) and CURDATE()";
+                                //$conditions1 = "and date(cm.CallDate) between SUBDATE(CURDATE(),INTERVAL 30 DAY) and CURDATE()";
+				//$view_date="date(t2.call_date) between SUBDATE(CURDATE(),INTERVAL 30 DAY) and CURDATE()";
+                                
+                                
+                                $conditions ="and MONTH(CallDate) = MONTH(CURDATE()) and YEAR(CallDate) = YEAR(CURDATE())";
+                                $Abandconditions ="and MONTH(AbandDate) = MONTH(CURDATE()) and YEAR(AbandDate) = YEAR(CURDATE())";
+                                $conditions1 ="and MONTH(cm.CallDate) = MONTH(CURDATE()) and YEAR(cm.CallDate) = YEAR(CURDATE())";
+                                $view_date ="MONTH(t2.call_date) = MONTH(CURDATE()) and YEAR(t2.call_date) = YEAR(CURDATE())";
+                                
+                                
+                                 
+                                
+			}
+			if($view_type=="Custom"){
+				$fdate = date('Y-m-d', strtotime($this->request->data['fdate']));
+				$ldate = date('Y-m-d', strtotime($this->request->data['ldate']));
+                                
+                                $condArr['date(CallDate) >=']=$fdate;
+                                $condArr['date(CallDate) <=']=$ldate;
+                                
+				$conditions = "and date(CallDate) between '$fdate' and '$ldate'";
+                                $Abandconditions = "and date(AbandDate) between '$fdate' and '$ldate'";
+                                $conditions1 = "and date(cm.CallDate) between '$fdate' and '$ldate'";
+                                $view_date = "date(t2.call_date) between '$fdate' and '$ldate'";
+                                        /*
+					if($this->request->data['fdate'] !="" && $this->request->data['ldate'] !=""){
+					$view_date=$fdate."&nbsp;-&nbsp;".$ldate;
+					}
+					else{
+						$view_date="";
+					}*/
+			}
+                        
+                        if($callType ==="outbounds"){
+                            $this->view_outbound_deshbord($conditions1,$conditions,$view_type,$view_date,$condArr,$callType,$fd,$ld);
+                            
+                        }else{
+                            $this->view_deshbord($conditions1,$conditions,$view_type,$view_date,$condArr,$callType,$fd,$ld,$Abandconditions);
+                        }
+                        
+		}
+		else{
+			$conditions = "and date(CallDate) = curdate()";
+                        $conditions1 = "and date(cm.CallDate) = curdate()";
+                        $curDate=date('Y-m-d');
+                        $view_date = "date(t2.call_date)='$curDate'";
+                        $condArr['date(CallDate)']=$curDate;
+                       
+                        if($callType ==="outbounds"){
+                            $this->view_outbound_deshbord($conditions1,$conditions,$view_type,$view_date,$condArr,$callType); 
+                        }else{
+                            $this->view_deshbord($conditions1,$conditions,$view_type='Today',$view_date,$condArr,$callType);
+                        }
+                        
+		}
+                
+		if(!empty($this->Session->read('companyid')))
+                {
+                    // $consume = $this->get_consume_data(); 
+                    // $today_cs_details = $this->get_today_consume_data();
+
+                    // Basant Code Start from here
+
+                    if (isset($this->request->data['view_type']))
+                    {
+                        $view_type=$this->request->data['view_type'];
+                        if($view_type=="Today"){
+            
+                            $conditions_new = "and date(cm_date) = curdate()";
+                            $sum_query = "sum";
+                                            
+                            // $Abandconditions = "and date(AbandDate) = curdate()";
+                            //                 $conditions1 = "and date(cm.CallDate) = curdate()";
+                            // $view_date="date(t2.call_date) = curdate()";
+                            //                 $condArr['date(CallDate)']=date('Y-m-d');
+                        }
+                        if($view_type=="Yesterday"){
+                            $yesterday=date('Y-m-d', strtotime('-1 day'));
+                                            $condArr['date(CallDate)']=$yesterday;
+
+                            $conditions_new = "and date(cm_date) = SUBDATE(CURDATE(),INTERVAL 1 DAY)";
+                            $sum_query = "sum";
+
+                            //                 $Abandconditions = "and date(AbandDate) = SUBDATE(CURDATE(),INTERVAL 1 DAY)";
+                            //                 $conditions1 = "and date(cm.CallDate) = SUBDATE(CURDATE(),INTERVAL 1 DAY)";
+                            // $view_date="date(t2.call_date) = SUBDATE(CURDATE(),INTERVAL 1 DAY)";
+                        }
+                        if($view_type=="Weekly"){
+                            $end = date('Y-m-d', strtotime('-6 day'));
+                                            $condArr['date(CallDate) <=']=date('Y-m-d');
+                                            $condArr['date(CallDate) >=']=$end;
+
+                            $conditions_new = "and date(cm_date) between SUBDATE(CURDATE(),INTERVAL 6 DAY) and CURDATE()";
+                            $sum_query = "sum";
+                                           
+                            // $Abandconditions = "and date(AbandDate) between SUBDATE(CURDATE(),INTERVAL 6 DAY) and CURDATE()";
+                            //                 $conditions1 = "and date(cm.CallDate) between SUBDATE(CURDATE(),INTERVAL 6 DAY) and CURDATE()";
+                            // $view_date="date(t2.call_date) between SUBDATE(CURDATE(),INTERVAL 6 DAY) and CURDATE()";
+                        
+                        }
+                        if($view_type=="Monthly"){
+                            $end = date('Y-m-d', strtotime('-30 day'));
+                                            $condArr['date(CallDate) <=']=date('Y-m-d');
+                                            $condArr['date(CallDate) >=']=$end;
+                                          
+                                            
+                                            $conditions ="and MONTH(cm_date) = MONTH(CURDATE()) and YEAR(CallDate) = YEAR(CURDATE())";
+                                            
+                                            
+                                            // $Abandconditions ="and MONTH(AbandDate) = MONTH(CURDATE()) and YEAR(AbandDate) = YEAR(CURDATE())";
+                                            // $conditions1 ="and MONTH(cm.CallDate) = MONTH(CURDATE()) and YEAR(cm.CallDate) = YEAR(CURDATE())";
+                                            // $view_date ="MONTH(t2.call_date) = MONTH(CURDATE()) and YEAR(t2.call_date) = YEAR(CURDATE())";
+                                            
+                                            
+                                            
+                                            
+                        }
+                        if($view_type=="Custom"){
+                            $fdate = date('Y-m-d', strtotime($this->request->data['fdate']));
+                            $ldate = date('Y-m-d', strtotime($this->request->data['ldate']));
+                                            
+                                            $condArr['date(CallDate) >=']=$fdate;
+                                            $condArr['date(CallDate) <=']=$ldate;
+                                            
+                            $conditions_new = "and date(cm_date) between '$fdate' and '$ldate'";
+                            $sum_query = "sum";
+                                           
+                            // $Abandconditions = "and date(AbandDate) between '$fdate' and '$ldate'";
+                            //                 $conditions1 = "and date(cm.CallDate) between '$fdate' and '$ldate'";
+                            //                 $view_date = "date(t2.call_date) between '$fdate' and '$ldate'";
+                                                    
+                            
+                            /*
+                                if($this->request->data['fdate'] !="" && $this->request->data['ldate'] !=""){
+                                $view_date=$fdate."&nbsp;-&nbsp;".$ldate;
+                                }
+                                else{
+                                    $view_date="";
+                                }*/
+
+                        }
+
+                        if(empty($view_type))
+
+                        {
+                            $sum_query = "";
+                        }
+                                    
+                                    // if($callType ==="outbounds"){
+                                    //     $this->view_outbound_deshbord($conditions1,$conditions,$view_type,$view_date,$condArr,$callType,$fd,$ld);
+                                        
+                                    // }else{
+                                        
+                                    //     $this->view_deshbord($conditions1,$conditions,$view_type,$view_date,$condArr,$callType,$fd,$ld,$Abandconditions);
+                                    
+                                    // }
+                                    
+                    }
+
+                    $consume = $this->get_consume_data($conditions_new,$sum_query); 
+                    $today_cs_details = $this->get_today_consume_data();
+
+                    // Basant Code End Here
+                    
+                    if(!empty($today_cs_details))
+                    {
+                        if(!empty($today_cs_details['total']))
+                        {
+                           // $consume = $consume+(int)$today_cs_details['total'];
+                        }
+                    }
+                    
+                    $this->set('consumed',$consume);
+                    $this->set('opening_balance',$this->get_opening_bal());
+                    $this->set('cs_pulse',$this->get_consume_pulse());
+                    $this->set('today_cs_pulse',$today_cs_details);
+                    $this->set('coll_bal',$this->get_collection());
+                    //$this->set('consume',$consume);
+                }
+	}
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        public function get_opening_bal()
+        {
+            
+                $clientId = $this->Session->read('companyid');
+                $year = date('Y');
+                $month = date('M');
+                $qry_opening = "SELECT * FROM billing_ledger bl where clientId='$clientId' AND fin_year='$year' AND fin_month='$month'  limit 1";
+                $BalanceMaster_det = $this->CallMaster->query($qry_opening);
+                
+                $talk_time = $BalanceMaster_det['0']['bl']['talk_time'];
+                
+                $op = $talk_time;
+                $op = $op;
+                
+                //$Plan_Det = $this->CallMaster->query("select * from `plan_master` where Id='{$BalanceMaster['PlanId']}' limit 1");
+                //$PlanDetails = $Plan_Det['0']['plan_master'];
+                //return $PlanDetails['CreditValue'];
+                return $op;
+            
+        }
+        
+        public function get_today_consume_data()
+        {
+            $clientId = $this->Session->read('companyid');   
+            $last_date = date('Y-m-d');
+            $bal_qry = "select * from `balance_master` where clientId='$clientId'  limit 1";
+            //$BalanceMasterRsc = mysqli_query($dd,$bal_qry);
+            $BalanceMasterRsc =$this->RegistrationMaster->query($bal_qry);
+            $BalanceMaster = $BalanceMasterRsc['0']['balance_master'];
+            //print_r($BalanceMaster);exit;
+
+          
+            $cm_total = 0;
+            $ib_pulse = 0;      $ib_secs=0;         $ib_charge = 0;     $ib_flat = 0;       $ib_total = 0;      $ib_pulse_per_call = 60;
+            $ibn_pulse = 0;     $ibn_secs=0;         $ibn_charge = 0;    $ibn_flat = 0;      $ibn_total = 0;     $ibn_pulse_per_call = 60;
+            $ob_pulse = 0;      $ob_secs=0;         $ob_charge = 0;     $ob_flat = 0;       $ob_total = 0;      $ob_pulse_per_call = 60;
+            $ivr_pulse = 0;     $ivr_secs=0;         $ivr_charge = 0;    $ivr_flat = 0;      $ivr_total = 0;     //$ivr_pulse_per_call = 60;
+            $miss_pulse = 0;    $miss_secs=0;         $miss_charge = 0;   $miss_flat = 0;     $miss_total = 0;    //$miss_pulse_per_call = 60;
+            $vfo_pulse = 0;     $vfo_secs=0;         $vfo_charge = 0;    $vfo_flat = 0;      $vfo_total = 0;     //$vfo_pulse_per_call = 60;
+            $sms_pulse = 0;     $sms_secs=0;         $sms_charge = 0;    $sms_flat = 0;      $sms_total = 0;     $sms_pulse_per_call = 60;
+            $email_pulse = 0;   $email_secs=0;         $email_charge = 0;  $email_flat = 0;    $email_total = 0;   //$email_pulse_per_call = 60;
+    
+    
+            
+
+if($BalanceMaster['PlanId'] !=""){
+    $ClientInfo = $this->RegistrationMaster->find('first',array("conditions"=>"company_id='$clientId'"));
+    
+    $Campagn=$ClientInfo['RegistrationMaster']['campaignid']; 
+    $PlanId = $BalanceMaster['PlanId'];
+    $plan_det_qry = "select * from `plan_master` where Id='$PlanId' limit 1";
+    $PlanDetailsRsc = $this->RegistrationMaster->query($plan_det_qry);
+    $PlanDetails = $PlanDetailsRsc['0']['plan_master'];
+    
+    
+    
+    
+    $ib_charge = $PlanDetails['InboundCallCharge'];
+    if($PlanDetails['IB_Call_Charge']=='Minute')
+    {
+        $ib_flat = 0;
+    }
+    else if($PlanDetails['IB_Call_Charge']=='Second')
+    {
+        $ib_flat = 1;
+    }
+    else if($PlanDetails['IB_Call_Charge']=='Minute/Second')
+    {
+        $ib_flat = 2;
+    }
+    
+    $ibn_charge = $PlanDetails['InboundCallChargeNight'];    
+    if($PlanDetails['IB_Call_Charge']=='Minute')
+    {
+        $ibn_flat = 0;
+    }
+    else if($PlanDetails['IB_Call_Charge']=='Second')
+    {
+        $ibn_flat = 1;
+    }
+    else if($PlanDetails['IB_Call_Charge']=='Minute/Second')
+    {
+        $ibn_flat = 2;
+    }
+    
+    $ob_charge = $PlanDetails['OutboundCallCharge'];
+    if($PlanDetails['OB_Call_Charge']=='Minute')
+    {
+        $ob_flat = 0;
+    }
+    else if($PlanDetails['OB_Call_Charge']=='Second')
+    {
+        $ob_flat = 1;
+    }
+    else if($PlanDetails['OB_Call_Charge']=='Minute/Second')
+    {
+        $ob_flat = 2;
+    }
+    
+    $ivr_charge = $PlanDetails['IVR_Charge'];    
+    $ivr_flat = 0;
+    $miss_charge = $PlanDetails['MissCallCharge'];   
+    $miss_flat = 0;
+    $vfo_charge = $PlanDetails['VFOCallCharge'];    
+    $vfo_flat = 0;
+    $sms_charge = $PlanDetails['SMSCharge'];    
+    $sms_flat = 0;
+    $email_charge = $PlanDetails['EmailCharge'];  
+    $email_flat = 0;
+       
+    $IvrQry = "SELECT DATE_FORMAT(call_time,'%d %b %y') `CallDate1`,call_time CallDate,source_number CallFrom,uniqueid FROM `rx_log` WHERE clientId='$clientId'  AND date(call_time) = '$last_date'";
+    $IvrDetails = $this->RegistrationMaster->query($IvrQry);
+
+    
+    $SMSQuery = "SELECT DATE_FORMAT(CallDate,'%d %b %y') `CallDate1`,CallDate,CallTime,CallFrom,Unit FROM `billing_master` WHERE clientId='$clientId' AND DedType='SMS' AND date(CallDate) = '$last_date'  ";
+    $SMSDetails = $this->RegistrationMaster->query($SMSQuery);
+    
+    $EmailQry = "SELECT DATE_FORMAT(CallDate,'%d %b %y') `CallDate1`,CallDate,CallTime,CallFrom,Unit FROM `billing_master` WHERE clientId='$clientId' AND DedType='Email' AND date(CallDate) = '$last_date'";
+    $EmailDetails = $this->RegistrationMaster->query($EmailQry);
+    
+    //$MissQry = "SELECT DATE_FORMAT(call_time,'%d %b %y') `CallDate1`,call_time CallDate,source_number CallFrom FROM `billing_master` WHERE clientId='$clientId'  AND date(CallDate) = '$last_date'";
+    //$MissDetails = $this->RegistrationMaster->query($MissQry);
+    
+    // Inbound Call duration details
+    $this->vicidialCloserLog->useDbConfig = 'db2';
+    $InboundQry = "select length_in_sec,queue_seconds,if(LENGTH(phone_number)>'12',LEFT(phone_number,10),RIGHT(phone_number,10)) phone_number,call_date from `vicidial_closer_log` where user !='VDCL' and campaign_id in ($Campagn) AND DATE(call_date) = '$last_date'  ";
+    $InboundDetails=$this->vicidialCloserLog->query($InboundQry);
+    
+    $OutboundQry = "select length_in_sec,if(LENGTH(phone_number)>'12',LEFT(phone_number,10),RIGHT(phone_number,10)) phone_number,call_date from `vicidial_log` where user !='VDAD' and campaign_id in ($Campagn) AND DATE(call_date) = '$last_date'  ";
+    $OutboundDetails=$this->vicidialCloserLog->query($OutboundQry);
+    
+    //$VFOQry = "SELECT DATE_FORMAT(calltime,'%d %b %y') `CallDate1`,calltime CallDate,source_number, uniqueid FROM sbarro_data WHERE clientId='$clientId'  AND DATE(calltime) = '$last_date'";
+    //$VfoDetails = $this->vicidialCloserLog->query($VFOQry);
+
+   
+    
+    
+    
+   
+    foreach($InboundDetails as $key=>$inbDurArrRsc)
+    {
+        //print_r($inbDurArrRsc);exit; 
+        $inbDurArr = $inbDurArrRsc['vicidial_closer_log'];
+        $call_duration = $inbDurArr['length_in_sec']-$inbDurArr['queue_seconds'];
+        $call_pulse = 0;
+        $call_rate = 0;
+        $call_pulsesec = 0;
+        
+        if(strtotime(date('H:i:s',strtotime($inbDurArr['call_date'])))>=strtotime('20:00:00') 
+                        || strtotime(date('H:i:s',strtotime($inbDurArr['call_date'])))<=strtotime('08:00:00'))
+        {
+            if($ibn_flat==0)
+            {
+                $call_pulse = ceil($call_duration/$ibn_pulse_per_call);
+                $call_rate = $call_pulse*$ibn_charge;
+            }
+            else if($ibn_flat==1)
+            {
+                $call_pulsesec = $call_duration;
+                $call_rate = $call_pulsesec*$ibn_charge;
+            }
+            else
+            {
+                $call_pulse = 1;
+                $call_rate = $ibn_charge;
+                if($call_duration>$ibn_pulse_per_call)
+                {
+                    $call_duration=($call_duration-$ibn_pulse_per_call);
+                    $call_rate += ($call_duration*($ibn_charge/$ibn_pulse_per_call));
+                    $call_pulsesec = $call_duration;
+                }
+            }
+
+            $ibn_pulse += $call_pulse;
+            $ibn_secs += $call_pulsesec;
+            $ibn_total += $call_rate;
+        }
+        else
+        {
+            if($ib_flat==0)
+            {
+                $call_pulse = ceil($call_duration/$ib_pulse_per_call);
+                $call_rate = $call_pulse*$ib_charge;
+            }
+            else if($ib_flat==1)
+            {
+                $call_pulsesec = $call_duration;
+                $call_rate = $call_pulsesec*$ib_charge;
+            }
+            else
+            {
+                $call_pulse = 1;
+                $call_rate = $ib_charge;
+                if($call_duration>$ib_pulse_per_call)
+                {
+                    $call_duration=($call_duration-$ib_pulse_per_call);
+                    $call_rate += ($call_duration*($ib_charge/$ib_pulse_per_call));
+                    $call_pulsesec = $call_duration;
+                }
+            }
+
+            $ib_pulse += $call_pulse;
+            $ib_secs += $call_pulsesec;
+            $ib_total += $call_rate;
+        }
+        
+    }
+    
+    
+    foreach($OutboundDetails as $key=>$outDurArrRsc)        
+    {
+        $outDurArr = $outDurArrRsc['vicidial_log'];
+        $call_duration = $outDurArr['length_in_sec'];
+        $call_pulse = 0;
+        $call_rate = 0;
+        $call_pulsesec = 0;
+        
+        if($ob_flat==0)
+        {
+            $call_pulse = ceil($call_duration/$ob_pulse_per_call);
+            $call_rate = $call_pulse*$ob_charge;
+        }
+        else if($ob_flat==1)
+        {
+            $call_pulsesec = $call_duration;
+            $call_rate = $call_pulsesec*$ob_charge;
+        }
+        else
+        {
+            $call_pulse = 1;
+            $call_rate = $ob_charge;
+            if($call_duration>$ob_pulse_per_call)
+            {
+                $call_duration=($call_duration-$ob_pulse_per_call);
+                $call_rate += ($call_duration*($ob_charge/$ob_pulse_per_call));
+                $call_pulsesec = $call_duration;
+            }
+        }
+
+        $ob_pulse += $call_pulse;
+        $ob_secs += $call_pulsesec;
+        $ob_total += $call_rate;
+    }
+    
+    $ivr_uniqueid_arr = array();
+    
+    
+    foreach($IvrDetails as $key=>$ivrArrRsc)        
+    {
+        $ivrArr =$ivrArrRsc['rx_log'];
+        $uniqueid = $ivrArr['uniqueid'];
+        $ivr_uniqueid_arr[$uniqueid] = $uniqueid;
+    }
+    $ivr_unit = count($ivr_uniqueid_arr); 
+    $ivr_rate = $ivr_unit*$ivr_charge;
+    $ivr_total = $ivr_rate;
+    $ivr_pulse = $ivr_unit;
+    
+    
+    foreach($SMSDetails as $key=>$smsArrRsc)        
+    {
+        $smsArr = $smsArrRsc['billing_master'];
+        $smsChar = $smsArr['Duration'];
+        
+        $sms_unit =$smsArr['Unit'];;
+        $sms_rate = 0;
+        $sms_pulsesec = 0;
+        
+//        if($sms_flat==0)
+//        {
+//            $sms_unit = ceil($smsChar/60);
+//            $sms_rate = ceil($sms_unit*$sms_charge);
+//        }
+//        else if($sms_flat==1)
+//        {
+//            $sms_pulsesec = $smsChar;
+//            $sms_rate = $sms_pulsesec*$sms_charge;
+//        }
+//        else
+//        {
+//            $sms_unit = 1;
+//            $sms_rate = $sms_charge;
+//            if($smsChar>60)
+//            {
+//                $smsChar=($smsChar-60);
+//                $sms_rate += ($smsChar*($sms_charge/60));
+//                $sms_pulsesec = $smsChar;
+//            }
+//        }
+
+        $sms_pulse += $sms_unit;
+        $sms_secs += $smsChar;
+        $sms_total += $sms_charge*$sms_unit;
+    }
+    
+    $EmailUnit = 0;
+    
+    foreach($EmailDetails as $key=>$emailRsc)        
+    {
+        $emailArr = $emailRsc['billing_master'];
+        $EmailUnit = $emailArr['Unit'];
+        $email_rate = $EmailUnit*$email_charge;
+        $email_pulse    += $EmailUnit;
+        $email_total      += $email_rate;
+    }
+    
+    
+    foreach($MissDetails as $key=>$misArr)        
+    {
+        $MissUnit = $misArr['Unit'];
+        $email_rate = ceil($MissUnit*$miss_charge);
+        $miss_pulse    += $MissUnit;
+        $miss_total      += $email_rate;
+    }
+    $ib = round($ib_pulse+$ibn_pulse+($ib_secs/60)+($ibn_secs/60));
+    $ob = round($ob_pulse+($ob_secs/60));
+    $cm_total = round($ib_total+$ibn_total+$ob_total+$ivr_total+$miss_total+$vfo_total+$sms_total+$email_total,3);
+    $return =  array('total'=>$cm_total,'ib'=>$ib,'ob'=>$ob,'sms'=>$sms_pulse,'email'=>$email_pulse,'ivr'=>$ivr_pulse,'miss'=>$miss_pulse,'vfo'=>$vfo_pulse);
+    //print_r($return);exit;
+   return $return;
+    }
+
+
+            
+            return array('total'=>0,'ib'=>0,'ob'=>0,'sms'=>0,'email'=>0,'ivr'=>0,'miss'=>0,'vfo'=>0); exit;
+}
+        
+        public function get_consume_data1()
+        {
+            
+            $clientId = $this->Session->read('companyid');
+            $qry = "select * from billing_opening_balance where clientId='$clientId'  limit 1";
+            $BalanceMaster_det = $this->CallMaster->query($qry);
+            $BalanceMaster = round($BalanceMaster_det['0']['billing_opening_balance']['cs_bal']);
+                //$Plan_Det = $this->CallMaster->query("select * from `plan_master` where Id='{$BalanceMaster['PlanId']}' limit 1");
+                //$PlanDetails = $Plan_Det['0']['plan_master'];
+                //return $PlanDetails['CreditValue'];
+                return $BalanceMaster;
+                exit;
+            
+        }
+        
+
+        public function get_consume_data($conditions,$sum_query)
+        {
+
+            
+            $clientId = $this->Session->read('companyid');
+
+            if(empty($sum_query))
+            {
+                    $qry = "select *,cm_total AS CV_MTD from billing_consume_daily where client_id='$clientId' $conditions  LIMIT 1"; 
+                    
+                    $BalanceMaster_det = $this->CallMaster->query($qry);
+                    
+                    $BalanceMaster = round($BalanceMaster_det['0']['billing_consume_daily']['CV_MTD']);
+            }
+            else
+            {
+                    $qry = "select *,SUM(cm_total) AS CV_MTD from billing_consume_daily where client_id='$clientId' AND date(cm_date) >= '2022-05-01'  $conditions "; 
+            
+                
+                    $BalanceMaster_det = $this->CallMaster->query($qry);
+                    
+                    $BalanceMaster = round($BalanceMaster_det['0']['0']['CV_MTD']);
+            }
+            
+
+               
+                 return $BalanceMaster;
+                exit;
+            
+        }
+        
+        public function get_consume_pulse()
+        {
+            
+            $clientId = $this->Session->read('companyid');
+            $pulse_det_arr = $this->CallMaster->query("SELECT * FROM `billing_consume_daily` bcd WHERE client_Id='$clientId' and DATE_FORMAT(CURDATE(),'%m-%Y') = DATE_FORMAT(cm_date,'%m-%Y')");
+            
+            $pulse_month_det = array();
+            $ib_minute = 0;
+            $ob_minute = 0;
+            $sms_minute = 0;
+            $email_minute = 0;
+            foreach($pulse_det_arr as $pulse_det)    
+            {
+                $ib_pulse = (int) $pulse_det['bcd']['ib_pulse'];
+                $ib_sec = (int) $pulse_det['bcd']['ib_secs'];
+                $ibn_pulse = (int) $pulse_det['bcd']['ibn_pulse'];
+                $ibn_secs = (int) $pulse_det['bcd']['ibn_secs'];
+                $ob_pulse = (int) $pulse_det['bcd']['ob_pulse'];
+                $ob_secs = (int) $pulse_det['bcd']['ob_secs'];
+                
+                $ib_minute +=$ib_pulse;
+                $ib_minute += round($ib_sec/60);
+                $ib_minute +=$ibn_pulse;
+                $ib_minute +=round($ibn_secs/60);
+                
+                $ob_minute += $ob_pulse;
+                $ob_minute += round($ob_secs/60);
+                
+                $sms_minute += $pulse_det['bcd']['sms_pulse'];
+                $email_minute += $pulse_det['bcd']['email_pulse'];
+            }    
+                return array('ib'=>$ib_minute,'ob'=>$ob_minute,'sms'=>$sms_minute,'email'=>$email_minute);
+                exit;
+            
+        }
+	
+	public function view_deshbord($conditions1,$conditions,$view_type,$view_date,$condArr,$callType,$fd,$ld,$Abandconditions){
+            
+		$ClientId = $this->Session->read('companyid');
+                $this->set('callType',$callType);
+                $this->set('fd',$fd);
+                $this->set('ld',$ld);
+                $this->set('viewType',$view_type);
+
+                $tatqry="SELECT cm.Category1, IF(DATE(cm.CloseLoopingDate)>DATE(cm.CallDate) AND cm.CloseLoopingDate IS NOT NULL,1,
+ IF((HOUR(cm.CloseLoopingDate)-HOUR(cm.CallDate))>tt.time_Hours AND cm.CloseLoopingDate IS NOT NULL,1,0)) `outtat`,
+  IF(DATE(cm.CloseLoopingDate)=DATE(cm.CallDate) AND (HOUR(cm.CloseLoopingDate)-HOUR(cm.CallDate))<=tt.time_Hours 
+  AND cm.CloseLoopingDate IS NOT NULL,1,0) `intat`, IF(CURDATE()>DATE(cm.CallDate) AND cm.CloseLoopingDate IS NULL,
+  1, IF((HOUR(NOW())-HOUR(cm.CallDate))>tt.time_Hours AND cm.CloseLoopingDate IS NULL,1,0)) `openouttat`, 
+  IF(CURDATE()=DATE(cm.CallDate) AND (HOUR(NOW())-HOUR(cm.CallDate))<=tt.time_Hours AND cm.CloseLoopingDate IS NOT NULL,1,0)
+   `openintat`, DATE_FORMAT(cm.CloseLoopingDate,'%d-%b-%Y')`CallDate`,DATE_FORMAT(cm.CallDate,'%d-%b-%Y')`CloseLoopDate`,
+   tt.time_hours FROM call_master cm INNER JOIN tbl_time tt ON cm.ClientId = tt.clientId 
+   AND CONCAT(IFNULL(cm.Category1,''),IFNULL(cm.Category2,''),IFNULL(cm.Category3,''),IFNULL(cm.Category4,''),IFNULL(cm.Category5,'')) = 
+   CONCAT(IFNULL(tt.Category1,''),IFNULL(tt.Category2,''),IFNULL(tt.Category3,''),IFNULL(tt.Category4,''),IFNULL(tt.Category5,''))
+                 WHERE cm.ClientId='$ClientId' $conditions1 AND cm.CallType !='Upload'  ORDER BY cm.Category1 ASC";
+                
+                $clmaster=$this->CallMaster->query($tatqry);
+               
+                
+                foreach($clmaster as $row){
+                    $key = $row[cm]['Category1'];
+                    if(key_exists($key, $newcategory))
+                    {
+                        $newcategory[$key]['MTD'] +=1;
+                        $newcategory[$key]['intat'] +=$row[0]['intat'];
+                        $newcategory[$key]['outtat'] +=$row[0]['outtat'];
+                        $newcategory[$key]['openintat'] +=$row[0]['openintat'];
+                        $newcategory[$key]['openouttat'] +=$row[0]['openouttat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['intat'] =$row[0]['intat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['outtat'] =$row[0]['outtat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['openintat'] =$row[0]['openintat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['openouttat'] =$row[0]['openouttat'];
+                       
+                    }
+                    else
+                    {
+                        $newcategory[$key]['MTD'] =1;
+                        $newcategory[$key]['intat'] =$row[0]['intat'];
+                        $newcategory[$key]['outtat'] =$row[0]['outtat'];
+                        $newcategory[$key]['openintat'] =$row[0]['openintat'];
+                        $newcategory[$key]['openouttat'] =$row[0]['openouttat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['intat'] =$row[0]['intat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['outtat'] =$row[0]['outtat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['openintat'] =$row[0]['openintat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['openouttat'] =$row[0]['openouttat'];
+                    }
+                    
+                    $total +=1;
+                    //$DataArr[] = $row[CallDate]['CloseLoopDate'];
+                 }
+                 
+                 
+                 
+                 
+                //$html .= "<table border='1'>";
+                //$html .= "<tr><th><b>Summary</b></th>";
+                //$html .= "<th><b>MTD</b></th>";
+                //$html .= "<th><b>%</b></th>";
+                
+                
+                
+                $this->set('newcategory',$newcategory);
+                $this->set('tatTotal',$total);
+                 /*
+                $keys = array_keys($newcategory);
+                $header = array('MTD'=>'','intat'=>'CLOSURE WITHIN TAT','outtat'=>'CLOSURE OUT OF TAT','openintat'=>'OPEN WITHIN TAT','openouttat'=>'OPEN OUT OF TAT');
+                foreach($header as $k1=>$v1){
+                    foreach($keys as $k){
+                        $html .= "<tr><th><b>Total ".$k.' '.$v1."</b></th>";
+                        $html .= "<th><b>".$newcategory[$k][$k1]."</b></th>"; 
+                        $html .= "<th><b>".round($newcategory[$k][$k1]*100/$total,2)."%</b></th>";
+                        
+                      
+                        $html .= "</tr>";     
+                    }
+                }*/
+                
+                //echo $html; 
+                
+                //exit;
+                
+                
+                
+                //**********************************************************************************************
+                
+                
+		$Category =$this->ClientCategory->find('all',array('fields'=>array("id","ecrName"),'conditions'=>array('Label'=>1,'Client'=>$ClientId)));
+			$ecrArr=array();
+			foreach($Category as $row)
+                        {
+                            $data = $this->fetchChildTree($parent =$row['ClientCategory']['id'],$user_tree_array = '');
+                            $ecrArr[]=array(
+                                'parent'=>array('id'=>$row['ClientCategory']['id'],'name'=>$row['ClientCategory']['ecrName']),
+                                'sub'=>$data,
+                            );	
+			}
+                        
+                         
+                        
+			$this->set('ecr',$ecrArr);
+			
+                       $Campagn  = $this->Session->read('campaignid');
+                       
+                       
+                       
+                        if(!empty($Campagn))
+                        {
+                                    $CampagnId ="and t2.campaign_id in ($Campagn)";
+                                    
+                                    
+                            $qry = "SELECT COUNT(*) `Total`,
+                                SUM(if(t2.`user` !='VDCL',1,0)) `Answered`,
+                                SUM(if(t2.`user` ='VDCL',1,0)) `Abandon`
+                            FROM asterisk.vicidial_closer_log t2 LEFT JOIN asterisk.call_log t1 ON t1.uniqueid=t2.uniqueid left join asterisk.vicidial_agent_log t3 ON t1.uniqueid=t3.uniqueid 
+                                WHERE $view_date $CampagnId and t2.term_reason!='AFTERHOURS' AND  t2.lead_id IS NOT NULL";
+                                
+                                
+                                $this->set('Category1',$this->CallMaster->query("SELECT Category1,GROUP_CONCAT(if(Category2 is null,Category1,Category2),'@@',countNo)`count`,SUM(countNo) `Total` FROM (SELECT Category1,Category2,COUNT(1)`countNo` FROM call_master
+                                where ClientId='$ClientId' $conditions AND CallType !='Upload'  GROUP BY Category1,Category2)AS tab GROUP BY Category1"));
+                                
+                                
+                                
+                                $this->set('closeloop',$this->CallMaster->query("SELECT Category1,Category2,COUNT(Category1) `cate1`,CloseLoopCate1,CloseLoopCate2,COUNT(CloseLoopCate1)
+                                FROM call_master where ClientId='$ClientId' $conditions AND CallType !='Upload' GROUP BY Category1,Category2,CloseLoopCate1,CloseLoopCate2"));
+                                
+                                $this->vicidialCloserLog->useDbConfig = 'db2';
+                                $dt= $this->vicidialCloserLog->query($qry);
+
+                                $this->set('qry',$conditions);
+                                $condArr['ClientId']=$ClientId;
+            
+                                $this->set('fd',$fd);
+                                $this->set('ld',$ld);
+                            
+                                $TACC=$this->AbandCallMaster->query("SELECT COUNT(Id) AS AbandCount FROM `aband_call_master` WHERE ClientId='$ClientId' $conditions AND TagStatus IS NULL");
+                                $this->set('Abandon',$dt[0][0]['Abandon']);
+                                
+                                $tc=$this->CallMaster->query("Select count(Id) as totaltag FROM call_master where ClientId='$ClientId' $conditions AND CallType !='Upload'");
+                                $this->set('totalTag',$tc[0][0]['totaltag']);
+                                
+                                $TACB=$this->AbandCallMaster->query("SELECT COUNT(Id) AS AbandCallBack FROM `aband_call_master` WHERE ClientId='$ClientId' $conditions AND TagStatus='yes'");
+                                $this->set('AbandCallBack',$TACB[0][0]['AbandCallBack']);
+                        
+                                
+                                
+                                
+                                
+                                $this->set('Answered',$dt[0][0]['Answered']);
+
+
+                                
+                     
+                    
+                    
+                            }
+            $this->set('clientid',$ClientId);
+
+               // Basant code start from here
+                            // for daywise data
+
+
+                            $list=array();
+                            $days=array();
+
+
+                            $month = date("m");
+                            $year = date("Y");
+                            $today = date("d");
+
+                            //$daycount = cal_days_in_month(CAL_GREGORIAN,$month,$year);
+                            $daycount = $today;
+
+                            $graph_date = array();
+
+                            for($d=1; $d<=$daycount; $d++)
+                            {
+                                $view_date1 ="date(t2.call_date) ='". $year."-".$month."-".$d."' ";
+
+
+                                $qry1 = "SELECT COUNT(*) `Total`,
+                                SUM(if(t2.`user` !='VDCL',1,0)) `Answered`,
+                                SUM(if(t2.`user` ='VDCL',1,0)) `Abandon`,
+                                date(t2.call_date) as gdate
+                                FROM asterisk.vicidial_closer_log t2 LEFT JOIN asterisk.call_log t1 ON t1.uniqueid=t2.uniqueid left join asterisk.vicidial_agent_log t3 ON t1.uniqueid=t3.uniqueid 
+                                WHERE $view_date1 $CampagnId and t2.term_reason!='AFTERHOURS' AND  t2.lead_id IS NOT NULL";
+                                
+
+                                $dt1= $this->vicidialCloserLog->query($qry1);
+
+                                $graph_date[] = $dt1; 
+
+
+                            }
+                        $this->set('graph_date_wise',$graph_date);
+
+
+
+                        // Ticket Case Analysis
+
+
+                            // for Week1
+
+                            $first_day_this_month = date('Y-m-01'); // hard-coded '01' for first day
+                            
+                            $date=date_create($first_day_this_month);
+
+                            date_add($date,date_interval_create_from_date_string("7 days"));
+
+                            $w1=date_format($date,"Y-m-d");
+
+                            
+
+                            $qry1 = "SELECT SUM(IF(Category1 = 'Complaint',1,0)) AS TComplaint , SUM(IF(Category1 = 'Request',1,0)) AS TRequest , SUM(IF(Category1 = 'Enquiry',1,0)) AS TEnquiry   FROM `call_master`
+                                         WHERE ClientId='$ClientId' AND DATE(CloseLoopingDate) BETWEEN ('$first_day_this_month') AND ('$w1')";
+
+                            $week1= $this->CallMaster->query($qry1);
+
+                               // for Week2
+
+                               $date=date_create($w1);
+   
+                               date_add($date,date_interval_create_from_date_string("7 days"));
+   
+                               $w2=date_format($date,"Y-m-d");
+   
+                               
+   
+                               $qry2 = "SELECT SUM(IF(Category1 = 'Complaint',1,0)) AS TComplaint , SUM(IF(Category1 = 'Request',1,0)) AS TRequest , SUM(IF(Category1 = 'Enquiry',1,0)) AS TEnquiry   FROM `call_master`
+                                            WHERE ClientId='$ClientId' AND DATE(CloseLoopingDate) BETWEEN ('$w1') AND ('$w2')";
+   
+                               $week2= $this->CallMaster->query($qry2);                           
+
+
+
+                               // for Week3
+
+                               $date=date_create($w2);
+   
+                               date_add($date,date_interval_create_from_date_string("7 days"));
+   
+                               $w3=date_format($date,"Y-m-d");
+   
+                               
+   
+                               $qry3 = "SELECT SUM(IF(Category1 = 'Complaint',1,0)) AS TComplaint , SUM(IF(Category1 = 'Request',1,0)) AS TRequest , SUM(IF(Category1 = 'Enquiry',1,0)) AS TEnquiry   FROM `call_master`
+                                            WHERE ClientId='$ClientId' AND DATE(CloseLoopingDate) BETWEEN ('$w2') AND ('$w3')";
+   
+                               $week3= $this->CallMaster->query($qry3);
+                               
+                               // for Week4
+
+                               $date=date_create($w3);
+   
+                               date_add($date,date_interval_create_from_date_string("7 days"));
+   
+                               $w4=date_format($date,"Y-m-d");
+   
+                               
+   
+                               $qry4 = "SELECT SUM(IF(Category1 = 'Complaint',1,0)) AS TComplaint , SUM(IF(Category1 = 'Request',1,0)) AS TRequest , SUM(IF(Category1 = 'Enquiry',1,0)) AS TEnquiry   FROM `call_master`
+                                            WHERE ClientId='$ClientId' AND DATE(CloseLoopingDate) BETWEEN ('$w3') AND ('$w4')";
+   
+                               $week4= $this->CallMaster->query($qry4);
+
+                               
+                            
+                               // for MTD
+                                $current_date = date("Y-m-d");  
+                               
+   
+                                $qry_mtd = "SELECT SUM(IF(Category1 = 'Complaint',1,0)) AS TComplaint , SUM(IF(Category1 = 'Request',1,0)) AS TRequest , SUM(IF(Category1 = 'Enquiry',1,0)) AS TEnquiry   FROM `call_master`
+                                            WHERE ClientId='$ClientId' AND DATE(CloseLoopingDate) BETWEEN ('$first_day_this_month') AND ('$current_date')";
+   
+                               $week_mtd= $this->CallMaster->query($qry_mtd);
+
+                            //    print_r($qry1); 
+                               $this->set('week1',$week1);
+                               $this->set('week2',$week2);
+                               $this->set('week3',$week3);
+                               $this->set('week4',$week4);
+                               $this->set('week_mtd',$week_mtd);
+
+
+                               // for ticket case today,mtd
+
+                               $tctm_today_qry="SELECT SUM(IF(CloseLoopCate1 = 'Done',1,0)) AS TClose , SUM(IF(CloseLoopCate1 = 'Pending',1,0)) AS TOpen FROM `call_master`
+                               WHERE ClientId='$ClientId' AND DATE(CloseLoopingDate) = CURDATE()";
+                               
+                               $tctm_today_row = $this->CallMaster->query($tctm_today_qry);
+
+
+
+                               $tctm_mtd_qry="SELECT SUM(IF(CloseLoopCate1 = 'Done',1,0)) AS TClose , SUM(IF(CloseLoopCate1 = 'Pending',1,0)) AS TOpen FROM `call_master`
+                               WHERE ClientId='$ClientId' AND DATE(CloseLoopingDate) BETWEEN ('$first_day_this_month') AND ('$current_date')";
+                               
+                               $tctm_mtd_row = $this->CallMaster->query($tctm_mtd_qry);
+
+                               $this->set('tctm_today_row',$tctm_today_row);
+                               $this->set('tctm_mtd_row',$tctm_mtd_row);
+
+
+                                // open & close case status
+
+                                 $openclose_ticket_qry="
+                                 SELECT  SUM(IF(DATE(cm.CloseLoopingDate)>DATE(cm.CallDate) AND cm.CloseLoopingDate IS NOT NULL,1, IF((HOUR(cm.CloseLoopingDate)-HOUR(cm.CallDate))>tt.time_Hours AND cm.CloseLoopingDate IS NOT NULL,1,0))) `outtat`,
+                                  SUM(IF(DATE(cm.CloseLoopingDate)=DATE(cm.CallDate) AND (HOUR(cm.CloseLoopingDate)-HOUR(cm.CallDate))<=tt.time_Hours AND cm.CloseLoopingDate IS NOT NULL,1,0)) `intat`,
+                                   SUM(IF(CURDATE()>DATE(cm.CallDate) AND cm.CloseLoopingDate IS NULL, 1, IF((HOUR(NOW())-HOUR(cm.CallDate))>tt.time_Hours AND cm.CloseLoopingDate IS NULL,1,0))) `openouttat`,
+                                    SUM(IF(CURDATE()=DATE(cm.CallDate) AND (HOUR(NOW())-HOUR(cm.CallDate))<=tt.time_Hours AND cm.CloseLoopingDate IS NOT NULL,1,0)) `openintat` 
+                                    FROM call_master cm 
+                                 INNER JOIN tbl_time tt ON cm.ClientId = tt.clientId AND CONCAT(IFNULL(cm.Category1,''),IFNULL(cm.Category2,''),IFNULL(cm.Category3,''),IFNULL(cm.Category4,''),IFNULL(cm.Category5,'')) = CONCAT(IFNULL(tt.Category1,''),IFNULL(tt.Category2,''),IFNULL(tt.Category3,''),IFNULL(tt.Category4,''),IFNULL(tt.Category5,'')) WHERE cm.ClientId='$ClientId' 
+                                 AND DATE(cm.CallDate)= CURDATE() "; 
+
+                                
+                                  
+                                $openclose_ticket_RecArr=$this->CallMaster->query($openclose_ticket_qry);
+
+
+                                 //print_r($openclose_ticket_RecArr);exit;
+
+                            //     $this->set('close_RecArr',$close_RecArr);
+                                $this->set('open_RecArr',$openclose_ticket_RecArr);
+
+                                
+                        // Basant Code End Here
+
+
+
+
+
+
+
+
+
+            
+	}
+        
+        
+        public function view_outbound_deshbord($conditions1,$conditions,$view_type,$view_date,$condArr,$callType,$fd,$ld){
+             
+		$ClientId = $this->Session->read('companyid');
+                $this->set('callType',$callType);
+                $this->set('fd',$fd);
+                $this->set('ld',$ld);
+                $this->set('viewType',$view_type);
+                //$this->set('campaignid',$campaignid);
+                
+                $tatqry="SELECT cm.Category1,
+                IF(DATE(cm.CloseLoopingDate)>DATE(cm.CallDate) AND cm.CloseLoopingDate IS NOT NULL,1,
+                IF((HOUR(cm.CloseLoopingDate)-HOUR(cm.CallDate))>tt.time_Hours AND cm.CloseLoopingDate IS NOT NULL,1,0)) `outtat`,
+                IF(DATE(cm.CloseLoopingDate)=DATE(cm.CallDate) AND (HOUR(cm.CloseLoopingDate)-HOUR(cm.CallDate))<=tt.time_Hours 
+                AND cm.CloseLoopingDate IS NOT NULL,1,0) `intat`,
+
+                IF(CURDATE()>DATE(cm.CallDate) AND cm.CloseLoopingDate IS NULL,1,
+                IF((HOUR(NOW())-HOUR(cm.CallDate))>tt.time_Hours AND cm.CloseLoopingDate IS NULL,1,0)) `openouttat`,
+
+                IF(CURDATE()=DATE(cm.CallDate) AND (HOUR(NOW())-HOUR(cm.CallDate))<=tt.time_Hours 
+                AND cm.CloseLoopingDate IS NOT NULL,1,0) `openintat`,
+
+                DATE_FORMAT(cm.CloseLoopingDate,'%d-%b-%Y')`CallDate`,DATE_FORMAT(cm.CallDate,'%d-%b-%Y')`CloseLoopDate`,tt.time_hours FROM call_master cm
+                INNER JOIN tbl_time tt ON cm.ClientId = tt.ClientId 
+                 WHERE cm.ClientId='$ClientId' $conditions1";
+                
+                $clmaster=$this->CallMaster->query($tatqry);
+               
+                
+                foreach($clmaster as $row){
+                    $key = $row[cm]['Category1'];
+                    if(key_exists($key, $newcategory))
+                    {
+                        $newcategory[$key]['MTD'] +=1;
+                        $newcategory[$key]['intat'] +=$row[0]['intat'];
+                        $newcategory[$key]['outtat'] +=$row[0]['outtat'];
+                        $newcategory[$key]['openintat'] +=$row[0]['openintat'];
+                        $newcategory[$key]['openouttat'] +=$row[0]['openouttat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['intat'] =$row[0]['intat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['outtat'] =$row[0]['outtat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['openintat'] =$row[0]['openintat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['openouttat'] =$row[0]['openouttat'];
+                       
+                    }
+                    else
+                    {
+                        $newcategory[$key]['MTD'] =1;
+                        $newcategory[$key]['intat'] =$row[0]['intat'];
+                        $newcategory[$key]['outtat'] =$row[0]['outtat'];
+                        $newcategory[$key]['openintat'] =$row[0]['openintat'];
+                        $newcategory[$key]['openouttat'] =$row[0]['openouttat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['intat'] =$row[0]['intat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['outtat'] =$row[0]['outtat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['openintat'] =$row[0]['openintat'];
+                        //$category[$key][$row[CallDate]['CloseLoopDate']]['openouttat'] =$row[0]['openouttat'];
+                    }
+                    
+                    $total +=1;
+                    //$DataArr[] = $row[CallDate]['CloseLoopDate'];
+                 }
+                 
+                 
+                 
+                 
+                //$html .= "<table border='1'>";
+                //$html .= "<tr><th><b>Summary</b></th>";
+                //$html .= "<th><b>MTD</b></th>";
+                //$html .= "<th><b>%</b></th>";
+                
+                
+                
+                $this->set('newcategory',$newcategory);
+                 /*
+                $keys = array_keys($newcategory);
+                $header = array('MTD'=>'','intat'=>'CLOSURE WITHIN TAT','outtat'=>'CLOSURE OUT OF TAT','openintat'=>'OPEN WITHIN TAT','openouttat'=>'OPEN OUT OF TAT');
+                foreach($header as $k1=>$v1){
+                    foreach($keys as $k){
+                        $html .= "<tr><th><b>Total ".$k.' '.$v1."</b></th>";
+                        $html .= "<th><b>".$newcategory[$k][$k1]."</b></th>"; 
+                        $html .= "<th><b>".round($newcategory[$k][$k1]*100/$total,2)."%</b></th>";
+                        
+                      
+                        $html .= "</tr>";     
+                    }
+                }*/
+                
+                //echo $html; 
+                
+                //exit;
+                
+                
+                
+                //**********************************************************************************************
+                
+                
+		$Category =$this->ClientCategory->find('all',array('fields'=>array("id","ecrName"),'conditions'=>array('Label'=>1,'Client'=>$ClientId)));
+			$ecrArr=array();
+			foreach($Category as $row)
+                        {
+                            $data = $this->fetchChildTree($parent =$row['ClientCategory']['id'],$user_tree_array = '');
+                            $ecrArr[]=array(
+                                'parent'=>array('id'=>$row['ClientCategory']['id'],'name'=>$row['ClientCategory']['ecrName']),
+                                'sub'=>$data,
+                            );	
+			}
+                        
+                         
+                        
+			$this->set('ecr',$ecrArr);
+			
+                        $Campagn  = $this->Session->read('campaignid');
+                        if(!empty($Campagn)){
+                        $CampagnId ="and t2.campaign_id in ($Campagn)";
+                     $qry = "SELECT COUNT(*) `Total`,
+                    SUM(if(t2.`user` !='VDCL',1,0)) `Answered`,
+                    SUM(if(t2.`user` ='VDCL',1,0)) `Abandon`
+                    FROM asterisk.vicidial_closer_log t2 LEFT JOIN asterisk.call_log t1 ON t1.uniqueid=t2.uniqueid left join asterisk.vicidial_agent_log t3 ON t1.uniqueid=t3.uniqueid  
+                    WHERE $view_date $CampagnId and t2.term_reason!='AFTERHOURS'";
+                    
+                    
+                    $this->set('Category1',$this->CallMaster->query("SELECT Category1,GROUP_CONCAT(if(Category2 is null,Category1,Category2),'-',countNo)`count`,SUM(countNo) `Total` FROM (SELECT Category1,Category2,COUNT(1)`countNo` FROM call_master
+                    where ClientId='$ClientId' $conditions  GROUP BY Category1,Category2)AS tab GROUP BY Category1"));
+                    
+                    
+                    
+                    $this->set('closeloop',$this->CallMaster->query("SELECT Category1,Category2,COUNT(Category1) `cate1`,CloseLoopCate1,CloseLoopCate2,COUNT(CloseLoopCate1)
+                    FROM call_master where ClientId='$ClientId' $conditions GROUP BY Category1,Category2,CloseLoopCate1,CloseLoopCate2"));
+                    
+                    $this->vicidialCloserLog->useDbConfig = 'db2';
+                    $dt= $this->vicidialCloserLog->query($qry);
+                    
+                     
+                    
+                    $this->set('qry',$conditions);
+                    
+                    
+                    $condArr['ClientId']=$ClientId;
+                                        
+                    $obTotalTag=count($this->CallMasterOut->find('all',array('fields'=>array('Id'),'conditions'=>$condArr)));
+                    $this->set('obTotalTag',$obTotalTag);
+                    
+                    
+                    $this->set('obAnswered','');
+                    $this->set('obAbandon','');
+                   
+                        } 
+                        
+                $this->set('clientid',$ClientId);
+	}
+
+	public function fetchChildTree($parent,$user_tree_array) {
+		if (!is_array($user_tree_array))
+			$user_tree_array = array();
+			$ClientId = $this->Session->read('companyid');
+			$query =$this->ClientCategory->find('all',array('fields'=>array("id","ecrName"),'conditions'=>array('parent_id'=>$parent,'Client'=>$ClientId)));
+			if (count($query) > 0) {
+				foreach($query as $row){
+					$id=$row['ClientCategory']['id'];
+					$name=$row['ClientCategory']['ecrName'];
+					$user_tree_array[] = array("id" => $id, "name" =>$name);
+				}
+			}
+			return $user_tree_array;
+	}
+
+        public function getTypeCount()
+        {
+            if($this->request->is('Post'))
+            {
+                $category1 = $this->request->data['Category'];
+                $category2 = $this->request->data['Type'];
+                $condition = $this->request->data['qry'];
+
+
+
+
+
+                $clientId = $this->Session->read('companyid');
+                $cat2 = $this->CallMaster->query("SELECT Category2, GROUP_CONCAT(if(Category3 is null or Category3='',Category2,Category3),'@@',countNo)`count`,SUM(countNo) `Total` FROM (SELECT Category2,Category3,COUNT(1)`countNo` FROM call_master
+        WHERE ClientId='$clientId' AND Category1='$category1' AND Category2='$category2' $condition GROUP BY Category2,Category3)AS tab GROUP BY Category2");
+
+
+                $count = 0; $Total = 0;
+                foreach($cat2 as $c):
+            //$data[$count]['tab'] = $c['ClientCategory']['id'];
+            $data[$count]['ecrName'] = str_replace(' ','',trim($c['tab']['Category2'])).rand(1000,10000);
+            $data[$count]['count'] = $c['0']['count'];
+            $Total += $c['0']['Total'];
+            $count++;
+            endforeach;
+            $this->set('Total',$Total);
+            $this->set('data',$data);
+            //$this->set('qry',$cat2);
+            $this->set('subscenarioname',$category2);
+            $this->set('scenarioname',$category1);
+
+
+            }
+        }
+	
+        public function get_collection()
+        {
+            
+                $clientId = $this->Session->read('companyid');
+                $month_start_date = date('Y-m-01');
+                $month_end_date = date('Y-m-t');
+                $CollectionMaster_det = $this->InitialInvoice->query("SELECT cm.client,ti.id,ti.month,ti.bill_no,ti.grnd,ti.total,sum(bpp.bill_passed) bill_passed FROM 
+     tbl_invoice ti 
+    INNER JOIN cost_master cm ON ti.cost_center = cm.cost_center AND cm.dialdesk_client_id ='$clientId'
+    INNER JOIN bill_pay_particulars bpp ON bpp.bill_no = SUBSTRING_INDEX(ti.bill_no,'/',1)
+    AND bpp.financial_year=ti.finance_year AND cm.company_name=bpp.company_name AND cm.branch=bpp.branch_name
+    WHERE  bpp.company_name='idc' AND bpp.branch_name='noida-dialdesk' 
+    AND date(bpp.createdate)  between '$month_start_date' and '$month_end_date' GROUP BY ti.bill_no");
+                
+                //$BalanceMaster = round($BalanceMaster_det['0']['billing_collection']['coll_bal']);
+                //$Plan_Det = $this->CallMaster->query("select * from `plan_master` where Id='{$BalanceMaster['PlanId']}' limit 1");
+                //$PlanDetails = $Plan_Det['0']['plan_master'];
+                //return $PlanDetails['CreditValue'];
+                $coll_bal = 0;
+                
+                foreach($CollectionMaster_det as $bal)
+                {
+                    $coll_bal +=round($bal['0']['bill_passed']);
+                }
+                return $coll_bal;
+            
+        }
+}
+?>

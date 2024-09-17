@@ -1,0 +1,1 @@
+ <?php echo $this->Form->input('sub_type', array('label'=>false,'options'=>$subcategory,'empty'=>'Select Sub Type','id'=>'sub_type')); ?>
